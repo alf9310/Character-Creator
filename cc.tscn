@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://clnhpb4hhikan"]
+
+[ext_resource type="Script" uid="uid://e5057q7jrfvo" path="res://addons/character_creator_creator/runtime/character_creator.gd" id="1_cltv7"]
+[ext_resource type="PackedScene" uid="uid://b8e1ao6qa1eot" path="res://character_scenes/character.tscn" id="2_3otr4"]
+[ext_resource type="Script" uid="uid://26be55alb275" path="res://addons/character_creator_creator/data/options/option_definition.gd" id="3_k5048"]
+[ext_resource type="Script" uid="uid://cl82yqw1qhtse" path="res://addons/character_creator_creator/data/options/mesh_swap_choice.gd" id="4_wmlic"]
+[ext_resource type="Script" uid="uid://bofw38rts1vr7" path="res://addons/character_creator_creator/data/options/mesh_swap_option.gd" id="5_cklcj"]
+[ext_resource type="Script" uid="uid://2nqgowcecxmc" path="res://addons/character_creator_creator/data/character_config.gd" id="6_wdm6w"]
+[ext_resource type="PackedScene" uid="uid://bn8lg7qd5wx63" path="res://addons/character_creator_creator/runtime/character_preview.tscn" id="7_o1ft7"]
+[ext_resource type="Script" uid="uid://dw4ticq08ga4c" path="res://addons/character_creator_creator/runtime/character_preview.gd" id="8_byug2"]
+[ext_resource type="Script" uid="uid://byr6baa6akjie" path="res://addons/character_creator_creator/runtime/creator_ui.gd" id="9_eci6t"]
+[ext_resource type="PackedScene" uid="uid://6dgu7au3kl18" path="res://addons/character_creator_creator/runtime/controls/swap_group.tscn" id="10_axdx6"]
+[ext_resource type="Script" uid="uid://diyugg21tehn7" path="res://addons/character_creator_creator/runtime/controls/swap_group.gd" id="11_iam04"]
+[ext_resource type="Script" uid="uid://bi6gctimk05cv" path="res://addons/character_creator_creator/runtime/character_exporter.gd" id="12_gxxhq"]
+
+[sub_resource type="Resource" id="Resource_fwdt2"]
+script = ExtResource("4_wmlic")
+label = "001"
+default_choice = true
+node_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/CharacterCreator/@Node@20855/low_poly_audrey_refactored/metarig/Skeleton3D/spine_006/Glasses_001")
+
+[sub_resource type="Resource" id="Resource_jwooj"]
+resource_name = "opt_glasses"
+script = ExtResource("5_cklcj")
+required = false
+choices = Array[ExtResource("4_wmlic")]([SubResource("Resource_fwdt2")])
+group = "Glasses"
+
+[sub_resource type="Resource" id="Resource_kakko"]
+script = ExtResource("4_wmlic")
+label = "Bob"
+default_choice = true
+node_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/CharacterCreator/@Node@20855/low_poly_audrey_refactored/metarig/Skeleton3D/hair_bob")
+
+[sub_resource type="Resource" id="Resource_4uoa7"]
+script = ExtResource("4_wmlic")
+label = "Straight"
+node_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/CharacterCreator/@Node@20855/low_poly_audrey_refactored/metarig/Skeleton3D/hair_straight")
+
+[sub_resource type="Resource" id="Resource_abkgb"]
+resource_name = "opt_hair"
+script = ExtResource("5_cklcj")
+choices = Array[ExtResource("4_wmlic")]([SubResource("Resource_kakko"), SubResource("Resource_4uoa7")])
+group = "Hair"
+
+[sub_resource type="Resource" id="Resource_rsj5n"]
+script = ExtResource("6_wdm6w")
+character_scene = ExtResource("2_3otr4")
+options = Array[ExtResource("3_k5048")]([SubResource("Resource_jwooj"), SubResource("Resource_abkgb")])
+
+[node name="CharacterCreator" type="Node" unique_id=1883469290 node_paths=PackedStringArray("ui", "exporter", "preview")]
+script = ExtResource("1_cltv7")
+config = SubResource("Resource_rsj5n")
+ui = NodePath("CreatorUI")
+exporter = NodePath("CharacterExporter")
+preview = NodePath("CharacterPreview")
+
+[node name="CharacterPreview" type="SubViewportContainer" parent="." unique_id=1262837080 instance=ExtResource("7_o1ft7")]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("8_byug2")
+
+[node name="CreatorUI" type="VBoxContainer" parent="." unique_id=1315107248]
+script = ExtResource("9_eci6t")
+
+[node name="Tabs" type="TabContainer" parent="CreatorUI" unique_id=250383602]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Glasses" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=1124193151]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 0
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Glasses" unique_id=731924680]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SwapGroup_opt_glasses" type="VBoxContainer" parent="CreatorUI/Tabs/Glasses/OptionList" unique_id=1745927510 instance=ExtResource("10_axdx6")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("11_iam04")
+option_id = "opt_glasses"
+
+[node name="Hair" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=284458084]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 1
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Hair" unique_id=1758757399]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SwapGroup_opt_hair" type="VBoxContainer" parent="CreatorUI/Tabs/Hair/OptionList" unique_id=1630753553 instance=ExtResource("10_axdx6")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("11_iam04")
+option_id = "opt_hair"
+
+[node name="Footer" type="HBoxContainer" parent="CreatorUI" unique_id=1474990408]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="RandomizeButton" type="Button" parent="CreatorUI/Footer" unique_id=2052430382]
+layout_mode = 2
+text = "↺ Randomize"
+
+[node name="CancelButton" type="Button" parent="CreatorUI/Footer" unique_id=1992001622]
+layout_mode = 2
+text = "Cancel"
+
+[node name="ConfirmButton" type="Button" parent="CreatorUI/Footer" unique_id=1346881982]
+layout_mode = 2
+text = "Confirm"
+
+[node name="CharacterExporter" type="Node" parent="." unique_id=1903198136]
+script = ExtResource("12_gxxhq")

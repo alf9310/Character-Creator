@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://41ctmp1kblto"]
+
+[ext_resource type="Script" uid="uid://dbwknm60742d3" path="res://addons/character_creator_creator/editor/docks/option_row.gd" id="1_jk0xb"]
+
+[node name="OptionRow" type="Control" unique_id=85494692]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+script = ExtResource("1_jk0xb")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2146247721]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=918881848]
+layout_mode = 2
+
+[node name="IncludeOption" type="CheckBox" parent="MarginContainer/HBoxContainer" unique_id=1892359729]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
+[node name="DisplayName" type="LineEdit" parent="MarginContainer/HBoxContainer" unique_id=2011359564]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Display Name"
+expand_to_text_length = true
+
+[node name="TypeBadge" type="Label" parent="MarginContainer/HBoxContainer" unique_id=680807174]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Default" type="CheckBox" parent="MarginContainer/HBoxContainer" unique_id=18014363]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Default"

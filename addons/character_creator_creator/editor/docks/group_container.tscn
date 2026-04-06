@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bmy5gtnptuk7p"]
+
+[ext_resource type="Script" uid="uid://c40rxpwkdei3i" path="res://addons/character_creator_creator/editor/docks/group_container.gd" id="1_4f1wf"]
+
+[node name="GroupContainer" type="Control" unique_id=379017564]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_4f1wf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1997672877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=766538151]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IncludeGroup" type="CheckBox" parent="VBoxContainer/HBoxContainer" unique_id=1321601424]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
+[node name="GroupField" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=1338820606]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Group"
+expand_to_text_length = true
+
+[node name="Required" type="CheckBox" parent="VBoxContainer/HBoxContainer" unique_id=1615635942]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Required
+"
+
+[connection signal="toggled" from="VBoxContainer/HBoxContainer/IncludeGroup" to="." method="_on_include_group_toggled"]

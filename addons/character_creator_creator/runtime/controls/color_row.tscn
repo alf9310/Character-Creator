@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ckl2thksh1siy"]
+
+[ext_resource type="Script" uid="uid://cds07wrpoy6ma" path="res://addons/character_creator_creator/runtime/controls/color_row.gd" id="1_780yj"]
+
+[node name="ColorRow" type="HBoxContainer" unique_id=2116090012]
+script = ExtResource("1_780yj")
+
+[node name="OptionLabel" type="Label" parent="." unique_id=405601006]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ColorPicker" type="ColorPickerButton" parent="." unique_id=352770505]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+edit_alpha = false

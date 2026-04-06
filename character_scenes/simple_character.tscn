@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bsnvf38mm65tm"]
+
+[ext_resource type="PackedScene" uid="uid://bvuw4uh7q0ta" path="res://meshes/simple_character.blend" id="1_t7ndf"]
+
+[node name="simple_character" unique_id=1745273664 instance=ExtResource("1_t7ndf")]
