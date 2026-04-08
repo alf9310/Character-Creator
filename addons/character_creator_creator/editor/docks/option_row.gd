@@ -8,7 +8,7 @@ class_name OptionRow
 @onready var _type_badge:		Label		= %TypeBadge
 @onready var _default:			CheckBox	= %Default # (only one can be selected at once per group)
 
-var _node_path: NodePath
+var _mesh_path: NodePath
 
 func setup(option: OptionDefinition) -> void:
 	_include_option.button_pressed = true
@@ -21,7 +21,7 @@ func setup_choice(choice: MeshSwapChoice, group: String) -> void:
 	_display_name.text				= choice.label
 	_type_badge.text				= "swap"
 	_default.button_pressed 		= choice.default_choice
-	_node_path						= choice.node_path
+	_mesh_path						= choice.mesh_path
 
 # Get the type of the OptionDefinition as a string
 func _type_string(opt: OptionDefinition) -> String:
@@ -38,5 +38,5 @@ func get_choice() -> MeshSwapChoice:
 	choice.label           = _display_name.text
 	choice.include         = true
 	choice.default_choice  = _default.button_pressed
-	choice.node_path       = _node_path
+	choice.mesh_path       = _mesh_path
 	return choice

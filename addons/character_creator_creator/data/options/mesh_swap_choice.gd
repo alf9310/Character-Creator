@@ -18,9 +18,9 @@ extends Resource
 ## The node is shown when this choice is selected; all siblings are hidden.
 # NOTE: Store a path instead of a Mesh Resource reference to keep 
 # per-node material overrides, skeleton bindings & other node-level data
-@export var node_path: NodePath
+@export var mesh_path: NodePath
 
 func _to_string() -> String:
 	return "Choice(%s | path: %s | default: %s | include: %s)" % [
-		label, node_path, default_choice, include
+		label, mesh_path, default_choice, include
 	]

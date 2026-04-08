@@ -21,8 +21,8 @@ enum CompatResult { COMPAT_FULL, COMPAT_PARTIAL, COMPAT_NONE }
 ## Where all the connections are made. 
 func _ready() -> void:
 	# Don't run initialization in the editor
-	if Engine.is_editor_hint():
-		return
+	#if Engine.is_editor_hint():
+	#	return
 		
 	# Core data flow: every UI change is applied to the mesh immediately
 	ui.option_changed.connect(exporter.apply_option)
@@ -83,16 +83,16 @@ func _on_cancel() -> void:
 # Ex: In the developer's game scene
 '''
 func _ready() -> void:
-    $CharacterCreator.character_confirmed.connect(_on_character_confirmed)
-    $CharacterCreator.character_cancelled.connect(_on_character_cancelled)
+	$CharacterCreator.character_confirmed.connect(_on_character_confirmed)
+	$CharacterCreator.character_cancelled.connect(_on_character_cancelled)
 
 func _on_character_confirmed(state: CharacterState) -> void:
-    # e.g. transition to the game world, store state for later use
-    PlayerData.character_state = state
-    get_tree().change_scene_to_file("res://scenes/world.tscn")
+	# e.g. transition to the game world, store state for later use
+	PlayerData.character_state = state
+	get_tree().change_scene_to_file("res://scenes/world.tscn")
 
 func _on_character_cancelled() -> void:
-    get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 '''
 
 func _on_randomize() -> void:
@@ -155,35 +155,3 @@ func _validate_state_compatibility(state: CharacterState) -> CompatResult:
 		return CompatResult.COMPAT_PARTIAL
 	else:
 		return CompatResult.COMPAT_NONE
-
-
-var _orbiting := false
-var _last_mouse_pos := Vector2.ZERO
-
-# Handles mouse drag input to rotate the preview camera
-# Here instead of Character Preview bc Godot requires consuming node to be 
-# in the main scne tree.
-# TODO: Could refactor this to pass through, would be annoying though
-# character_creator.gd
-# TODO: Change to UI actions in settings
-func _unhandled_input(event: InputEvent) -> void:
-	if not preview.get_global_rect().has_point(get_viewport().get_mouse_position()):
-		return
-
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			preview.zoom(-0.15)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			preview.zoom(0.15)
-		elif event.button_index == MOUSE_BUTTON_LEFT:
-			# RESET on double-left mouse click
-			if event.double_click:
-				preview.reset()
-			else:
-				_orbiting = event.pressed
-				_last_mouse_pos = event.position
-
-	elif event is InputEventMouseMotion and _orbiting:
-		var delta : Vector2 = event.position - _last_mouse_pos
-		_last_mouse_pos = event.position
-		preview.orbit(delta * 0.4) # CharacterPreview exposes orbit(delta: Vector2)

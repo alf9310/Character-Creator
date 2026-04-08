@@ -42,7 +42,7 @@ func initialize(config: CharacterConfig, preview: CharacterPreview, ui: Control)
 func _warm_cache(opt: OptionDefinition) -> void:
 	# TODO: Clean this
 	if opt is BlendshapeOption or opt is ColorOption or opt is MeshSwapOption:
-		var path: NodePath = opt.mesh_path if opt.has("mesh_path") else NodePath("")
+		var path: NodePath = opt.mesh_path if opt.get("mesh_path") else NodePath("")
 		if path != NodePath("") and not _mesh_cache.has(path):
 			var node := _character_root.get_node_or_null(path)
 			if node is MeshInstance3D:
@@ -60,10 +60,10 @@ func _warm_cache(opt: OptionDefinition) -> void:
 
 	if opt is MeshSwapOption:
 		for choice: MeshSwapChoice in opt.choices:
-			if not _mesh_cache.has(choice.node_path):
-				var node := _character_root.get_node_or_null(choice.node_path)
+			if not _mesh_cache.has(choice.mesh_path):
+				var node := _character_root.get_node_or_null(choice.mesh_path)
 				if node is MeshInstance3D:
-					_mesh_cache[choice.node_path] = node
+					_mesh_cache[choice.mesh_path] = node
 
 	if opt is AnimationOption:
 		var path : NodePath = opt.animation_player_path
@@ -103,7 +103,7 @@ func apply_option(option_id: String, value: Variant) -> void:
 func _apply_swap(opt: MeshSwapOption, choice_index: int) -> void:
 	# All of this happens before rendering (order doesn't matter)
 	for i in range(opt.choices.size()):
-		var node := _mesh_cache.get(opt.choices[i].node_path) as MeshInstance3D
+		var node := _mesh_cache.get(opt.choices[i].mesh_path) as MeshInstance3D
 		if node == null:
 			continue
 		node.visible = (i == choice_index)

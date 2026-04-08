@@ -2,22 +2,27 @@
 class_name CharacterPreview
 extends SubViewportContainer
 
-# Orbit state
-var _yaw:   float = 0.0
-var _pitch: float = 0.0
-
-# Zoom state
-var _arm_length: float = 2.0
-
 # TODO: Adjust in settings 
-const ZOOM_MIN := 0.5
-const ZOOM_MAX := 5.0
+@export var rotation_speed := 0.01
+
+@export var zoom_speed := 0.1
+@export var min_zoom := 0.5
+@export var max_zoom := 5.0
+
+
+@export var pan_speed := 1.0
+@export var min_height := 0.0
+@export var max_height := 1.5
+
+var zoom := 2.0
+
 
 # Node references
 @onready var _viewport:  SubViewport  = $SubViewport
-@onready var _pivot:     Node3D       = $SubViewport/CameraRig/Pivot
-@onready var _camera:    Camera3D     = $SubViewport/CameraRig/Camera3D
-@onready var _character: Node         = null #$SubViewport/Character # Injected by SceneGenerator
+@onready var _rig:     Node3D         = $SubViewport/CameraRig # Horizontal rotation (yaw)
+@onready var _pivot:     Node3D       = $SubViewport/CameraRig/CameraPivot # Pan vertically
+@onready var _camera:    Camera3D     = $SubViewport/CameraRig/CameraPivot/Camera3D
+@onready var _character: Node         = $SubViewport/Character # Injected by SceneGenerator
 
 
 ### SubViewport configuration
@@ -47,50 +52,40 @@ func _ready() -> void:
 	# Don't run initialization in the editor
 	#if Engine.is_editor_hint():
 	#	return
-		
-	_arm_length = _camera.position.z   # read initial distance from the .tscn
-	_apply_camera_transform()
+	update_camera_distance()
 
 
-func _apply_camera_transform() -> void:
-	# Clamp pitch to prevent flipping over the top or bottom & gimbal lock
-	_pitch = clamp(_pitch, -80.0, 80.0)
+func _input(event):
+	# --- Zoom ---
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom -= zoom_speed
+			update_camera_distance()
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom += zoom_speed
+			update_camera_distance()
 
-	_pivot.rotation_degrees = Vector3(_pitch, _yaw, 0.0)
-	_camera.position        = Vector3(0.0, 0.0, _arm_length)
+	# --- Rotate + Pan (Left Click Drag) ---
+	if event is InputEventMouseMotion:
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			# Rotate
+			_rig.rotate_y(-event.relative.x * rotation_speed)
 
-## Sets the pivot's look-at target which offsets it upward from the character's origin 
-## CharacterCreator calls configure() in _ready() after reading the config.
-func configure(config: CharacterConfig) -> void:
-	_arm_length = config.preview_camera_distance
+			# Normalize by viewport height
+			var pan_delta = (event.relative.y / _viewport.size.y) * pan_speed
+			
+			var new_y := clamp(
+				_pivot.position.y + pan_delta,
+				min_height,
+				max_height
+			)
 
-	# Offset the CameraRig itself upward so the orbit center
-	# is at chest/face height rather than the character's feet
-	$SubViewport/CameraRig.position = Vector3(0.0, config.preview_camera_height, 0.0)
+			_pivot.position.y = new_y
 
-	_apply_camera_transform()
 
-## CharacterCreator._unhandled_input() calls orbit() on every drag frame 
-## when the cursor is over the preview area.
-# TODO: Adjust camera motion in settings 
-func orbit(delta: Vector2) -> void:
-	_yaw   -= delta.x   # horizontal drag -> rotate around Y axis
-	_pitch -= delta.y   # vertical drag   -> tilt up/down
-	_apply_camera_transform()
-
-## Zoom is applied directly to _camera.position.z
-func zoom(delta: float) -> void:
-	_arm_length = clamp(_arm_length + delta, ZOOM_MIN, ZOOM_MAX)
-	_camera.position.z = _arm_length
-
-func reset() -> void:
-	_yaw        = 0.0
-	_pitch      = 0.0
-	# TODO: Add a default distance in config
-	# _arm_length = _config.preview_camera_distance
-	_arm_length = 2.0
-	_apply_camera_transform()
-	_camera.position.z = _arm_length
+func update_camera_distance():
+	zoom = clamp(zoom, min_zoom, max_zoom)
+	_camera.position = Vector3(0, 0, zoom)
 
 
 ## Exposes the character node to CharacterExporter to call blendshape and material operations.
@@ -110,7 +105,7 @@ func get_character_root() -> Node:
 ## SubViewport has a fixed size, but the SubViewportContainer can be resized by the layout.
 ## Updates the viewport's internal resolution when the container changes size to 
 ## avoid rendering at the wrong aspect ratio.
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_RESIZED:
-		var new_size := Vector2i(int(size.x), int(size.y))
-		$SubViewport.size = new_size
+#func _notification(what: int) -> void:
+#	if what == NOTIFICATION_RESIZED:
+#		var new_size := Vector2i(int(size.x), int(size.y))
+#		$SubViewport.size = new_size

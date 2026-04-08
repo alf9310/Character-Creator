@@ -40,7 +40,7 @@ func _inspect_swap_slots(meshes: Array[MeshInstance3D]) -> Array[OptionDefinitio
 		var group := parts[0].capitalize()
 
 		var choice				:= MeshSwapChoice.new()
-		choice.node_path		= mesh_node.get_path()
+		choice.mesh_path		= mesh_node.get_path()
 		choice.default_choice	= not group in groups  # first mesh in group = default
 		choice.label			= parts[1].capitalize() if parts.size() > 1 else ""
 		choice.include			= parts.size() > 1

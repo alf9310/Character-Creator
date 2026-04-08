@@ -10,7 +10,7 @@
 script = ExtResource("3_884gj")
 label = "001"
 default_choice = true
-node_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/CharacterCreator/@Node@20855/low_poly_audrey_refactored/metarig/Skeleton3D/spine_006/Glasses_001")
+mesh_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/low_poly_audrey_refactored/@Node@22376/low_poly_audrey_refactored/metarig/Skeleton3D/spine_006/Glasses_001")
 
 [sub_resource type="Resource" id="Resource_jwooj"]
 resource_name = "opt_glasses"
@@ -23,12 +23,12 @@ group = "Glasses"
 script = ExtResource("3_884gj")
 label = "Bob"
 default_choice = true
-node_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/CharacterCreator/@Node@20855/low_poly_audrey_refactored/metarig/Skeleton3D/hair_bob")
+mesh_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/low_poly_audrey_refactored/@Node@22376/low_poly_audrey_refactored/metarig/Skeleton3D/hair_bob")
 
 [sub_resource type="Resource" id="Resource_4uoa7"]
 script = ExtResource("3_884gj")
 label = "Straight"
-node_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/CharacterCreator/@Node@20855/low_poly_audrey_refactored/metarig/Skeleton3D/hair_straight")
+mesh_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/low_poly_audrey_refactored/@Node@22376/low_poly_audrey_refactored/metarig/Skeleton3D/hair_straight")
 
 [sub_resource type="Resource" id="Resource_abkgb"]
 resource_name = "opt_hair"

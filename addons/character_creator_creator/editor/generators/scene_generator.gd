@@ -54,12 +54,26 @@ func _build_base_tree(config: CharacterConfig) -> Node:
 		if character == null:
 			push_error("[SceneGenerator] Failed to instantiate character scene.")
 			return root
-
+	
+		character.name = "Character"
+		
 		print("\tCharacter instantiated: ", character.name)
+		# Add children
+		#if character.get_parent():
+		#	character.get_parent().remove_child(character)
 		viewport.add_child(character)
 		root.add_child(preview)
-		preview.owner = root
-		_set_owners(character, root)
+		
+		# Unwrap the CharacterPreview so Godot is allowed to save the character inside its SubViewport
+		_unwrap_and_bind(preview, root, character)
+
+		# Bind the character instance to the root (but don't unwrap its internals!)
+		character.owner = root
+		
+		# Set owners
+		#preview.owner = root
+		#_set_owners(character, root)
+		
 		root.preview = preview
 		print("\tOwners set on character subtree")
 
@@ -142,6 +156,16 @@ func _validate(config: CharacterConfig) -> bool:
 			return false
 		ids[opt.resource_name] = true
 	return true
+
+## Recursively sets node owners to scene_root and clears their scene_file_path 
+## so they are saved directly in the .tscn instead of remaining an external instance.
+func _unwrap_and_bind(node: Node, scene_root: Node, ignore_node: Node) -> void:
+	node.owner = scene_root
+	node.scene_file_path = "" # Breaks the instance link so children can be saved inside it
+
+	for child in node.get_children():
+		if child != ignore_node:
+			_unwrap_and_bind(child, scene_root, ignore_node)
 
 # Walks a subtree and sets .owner on every node that doesn't already have one.
 # Nodes from packed scenes carry their own owner so only new nodes need this.
