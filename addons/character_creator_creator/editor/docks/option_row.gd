@@ -14,6 +14,7 @@ func setup(option: OptionDefinition) -> void:
 	_include_option.button_pressed = true
 	_display_name.text = option.display_name
 	_type_badge.text = _type_string(option)
+	# TODO: Add mesh path for some
 	
 # Used by GroupContainer for individual swap choices
 func setup_choice(choice: MeshSwapChoice, group: String) -> void:

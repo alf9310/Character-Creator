@@ -69,6 +69,7 @@ func _build_tab(
 	scroll.name                   = group_name
 	scroll.size_flags_vertical    = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.custom_minimum_size 		= Vector2(0, 500)
 	tabs.add_child(scroll)
 	scroll.owner = scene_root
 
@@ -87,11 +88,17 @@ func _build_tab(
 		_set_owners(control, scene_root)
 
 
-# Walks a subtree and sets .owner on every node that doesn't already have one.
-# Nodes from packed scenes carry their own owner so only new nodes need this.
+# Walks a subtree and sets .owner on every node.
+# By overwriting the owner and clearing the scene_file_path, 
+# we "unwrap" the instanced templates so Godot saves their internal overrides 
+# and newly added children directly into the generated .tscn.
 func _set_owners(node: Node, scene_root: Node) -> void:
-	if node.owner == null:
-		node.owner = scene_root
+	# Force the owner to be the root we are saving
+	node.owner = scene_root
+	
+	# Break the instance link so it stops acting like a black box
+	node.scene_file_path = ""
+
 	for child in node.get_children():
 		_set_owners(child, scene_root)
 
@@ -114,7 +121,7 @@ func _build_control(
 		return _build_anim_row(opt as AnimationOption)
 
 	push_warning(
-        "[UIGenerator] Unrecognised OptionDefinition subtype '%s' — skipped."
+		"[UIGenerator] Unrecognised OptionDefinition subtype '%s' — skipped."
 		% opt.get_class()
 	)
 	return null
@@ -125,9 +132,9 @@ func _build_swap_group(opt: MeshSwapOption, scene_root: Node) -> SwapGroup:
 	group.name      = "SwapGroup_" + opt.resource_name
 	group.option_id = opt.resource_name
 
-	group.get_node("%OptionLabel").text = opt.display_name
+	group.find_child("OptionLabel", true, false).text = opt.display_name
 
-	var container := group.get_node("%ButtonContainer") as HFlowContainer
+	var container := group.find_child("ButtonContainer", true, false) as HFlowContainer
 
 	for i in range(opt.choices.size()):
 		var choice := opt.choices[i] as MeshSwapChoice
@@ -145,11 +152,11 @@ func _build_slider_row(opt: BlendshapeOption) -> SliderRow:
 	row.name      = "SliderRow_" + opt.resource_name
 	row.option_id = opt.resource_name
 
-	row.get_node("%OptionLabel").text = opt.display_name
-	row.get_node("%Slider").min_value = opt.min_value
-	row.get_node("%Slider").max_value = opt.max_value
-	row.get_node("%Slider").value     = opt.default_value
-	row.get_node("%Readout").text     = "%.2f" % opt.default_value
+	row.find_child("OptionLabel", true, false).text = opt.display_name
+	row.find_child("Slider", true, false).min_value = opt.min_value
+	row.find_child("Slider", true, false).max_value = opt.max_value
+	row.find_child("Slider", true, false).value      = opt.default_value
+	row.find_child("Readout", true, false).text      = "%.2f" % opt.default_value
 
 	return row
 
@@ -159,8 +166,8 @@ func _build_color_row(opt: ColorOption) -> ColorRow:
 	row.name      = "ColorRow_" + opt.resource_name
 	row.option_id = opt.resource_name
 
-	row.get_node("%OptionLabel").text  = opt.display_name
-	row.get_node("%ColorPicker").color = opt.default_color
+	row.find_child("OptionLabel", true, false).text  = opt.display_name
+	row.find_child("ColorPicker", true, false).color = opt.default_color
 
 	return row
 
@@ -171,8 +178,8 @@ func _build_anim_row(opt: AnimationOption) -> AnimRow:
 	row.option_id      = opt.resource_name
 	row.animation_name = opt.animation_name
 
-	row.get_node("%OptionLabel").text   = opt.display_name
-	row.get_node("%PreviewButton").text = "Preview"
+	row.find_child("OptionLabel", true, false).text   = opt.display_name
+	row.find_child("PreviewButton", true, false).text = "Preview"
 
 	return row
 

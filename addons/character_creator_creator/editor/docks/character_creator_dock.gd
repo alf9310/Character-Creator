@@ -12,8 +12,10 @@ const OptionRowScene = preload("res://addons/character_creator_creator/editor/do
 @onready var _input_dialog:		FileDialog		= %InputDialog
 @onready var _status_label:		Label			= %StatusLabel
 
-@onready var _options_list:		VBoxContainer	= %OptionsList
 @onready var _mesh_swaps_list:	VBoxContainer	= %MeshSwapsList
+@onready var _blendshapes_list:	VBoxContainer	= %BlendshapesList
+@onready var _textures_list:	VBoxContainer	= %TexturesList
+@onready var _animations_list:	VBoxContainer	= %AnimationsList
 
 @onready var _allow_random:		CheckBox		= %AllowRandomize
 @onready var _show_preview:		CheckBox		= %ShowPreview
@@ -52,6 +54,12 @@ func _on_input_dialog_file_selected(path: String) -> void:
 func _rebuild_options_list() -> void:
 	for child in _mesh_swaps_list.get_children():
 		child.queue_free()
+	for child in _blendshapes_list.get_children():
+		child.queue_free()
+	for child in _textures_list.get_children():
+		child.queue_free()
+	for child in _animations_list.get_children():
+		child.queue_free()
 
 	for opt in _detected_options:
 		if opt is MeshSwapOption:
@@ -69,16 +77,24 @@ func _rebuild_options_list() -> void:
 				rows.append(row)
 				
 			group.register_rows(rows)
-		#else:
-			# Blendshapes, colors, animations remain flat rows
-			#var row: OptionRow = OptionRowScene.instantiate()
-			#_mesh_swaps_list.add_child(row)
-			#row.setup(opt)
-		# row.changed.connect(_on_option_row_changed)
-		# TODO: Fix this signal connection
 		
+		if opt is BlendshapeOption:
+			var row: OptionRow = OptionRowScene.instantiate()
+			_blendshapes_list.add_child(row)
+			row.setup(opt)
+
+			# Embed the data resource into the row so we can pull it back out easily later
+			row.set_meta("source_option", opt)
+
+# Pressing the catagory button toggles visibility of children
 func _on_mesh_swaps_toggled(toggled_on: bool) -> void:
 	_mesh_swaps_list.visible = toggled_on
+func _on_blendshapes_toggled(toggled_on: bool) -> void:
+	_blendshapes_list.visible = toggled_on
+func _on_textures_toggled(toggled_on: bool) -> void:
+	_textures_list.visible = toggled_on
+func _on_animations_toggled(toggled_on: bool) -> void:
+	_animations_list.visible = toggled_on
 
 # Phase 3: Character Config
 func _on_output_button_pressed() -> void:
@@ -100,12 +116,30 @@ func _on_generate_button_pressed() -> void:
 	config.allow_randomize  		= _allow_random.button_pressed
 	config.save_state_on_confirm	= _save_state.button_pressed
 	config.show_preview     		= _show_preview.button_pressed
-
+	
+	# 1. Gather Mesh Swaps
 	for child in _mesh_swaps_list.get_children():
 		if not child is GroupContainer:
 			continue
 		var opt: MeshSwapOption = child.get_config_option()
 		if opt != null:
+			config.options.append(opt)
+			
+	# 2. Gather Blendshapes
+	for child in _blendshapes_list.get_children():
+		if not child is OptionRow:
+			continue
+
+		# Only include if the developer left the row's checkbox checked
+		var include_checkbox := child.get_node_or_null("%IncludeOption") as CheckBox
+		if include_checkbox and include_checkbox.button_pressed:
+			var opt: OptionDefinition = child.get_meta("source_option")
+
+			# Grab any potential display name renames the dev made in the UI
+			var name_edit := child.get_node_or_null("%DisplayName") as LineEdit
+			if name_edit:
+				opt.display_name = name_edit.text
+
 			config.options.append(opt)
 
 	if config.options.is_empty():
@@ -138,6 +172,11 @@ func _slugify(opt: OptionDefinition) -> String:
 		"ColorOption":      "color",
 		"AnimationOption":  "anim",
 	}.get(opt.get_class(), "opt")
-	var name := opt.group.to_lower().replace(" ", "_")
+	
+	# Fallback to display_name if group is empty (which it is for blendshapes)
+	var base_string: String = opt.group if not opt.group.is_empty() else opt.display_name
+
+	# Strip spaces and punctuation for a clean ID
+	var name := base_string.to_lower().replace(" ", "_").replace(".", "").replace("-", "_")
 	return "%s_%s" % [prefix, name]
 	# e.g. "blend_face_fat", "swap_hair", "color_skin_color"

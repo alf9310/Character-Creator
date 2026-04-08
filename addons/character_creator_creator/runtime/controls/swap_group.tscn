@@ -13,9 +13,7 @@ size_flags_vertical = 3
 script = ExtResource("1_w10oh")
 
 [node name="OptionLabel" type="Label" parent="." unique_id=1722370037]
-unique_name_in_owner = true
 layout_mode = 2
 
 [node name="ButtonContainer" type="HFlowContainer" parent="." unique_id=357389565]
-unique_name_in_owner = true
 layout_mode = 2

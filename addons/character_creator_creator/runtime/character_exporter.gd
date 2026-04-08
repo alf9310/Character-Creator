@@ -77,8 +77,11 @@ func _warm_cache(opt: OptionDefinition) -> void:
 # Every slider move, button press, and color pick arrives here.
 # TODO: Refactor to make as fast as possible! 
 func apply_option(option_id: String, value: Variant) -> void:
+	print("Exporter received signal for: ", option_id, " -> ", value)
+	
 	var opt := _option_map.get(option_id) as OptionDefinition
 	if opt == null:
+		push_error("Exporter failed: Option ID '%s' not found in option_map!" % option_id)
 		return
 
 	if opt is BlendshapeOption:
@@ -100,13 +103,36 @@ func apply_option(option_id: String, value: Variant) -> void:
 # Less efficient for baking, BUT alteratives have unwanted side-effects. 
 # Ex. 	Swapping mesh_instance.mesh looses per-node material overrides,
 # 		Adding and removing nodes triggers _ready()
-func _apply_swap(opt: MeshSwapOption, choice_index: int) -> void:
-	# All of this happens before rendering (order doesn't matter)
-	for i in range(opt.choices.size()):
-		var node := _mesh_cache.get(opt.choices[i].mesh_path) as MeshInstance3D
-		if node == null:
-			continue
-		node.visible = (i == choice_index)
+func _apply_swap(opt: MeshSwapOption, choice_index: int, force_full_pass: bool = false) -> void:
+	# --- SAFE PATH: Used during initialization to clean up messy .tscn files ---
+	if force_full_pass:
+		# All of this happens before rendering (order doesn't matter)
+		for i in range(opt.choices.size()):
+			var node := _mesh_cache.get(opt.choices[i].mesh_path) as MeshInstance3D
+			if node:
+				node.visible = (i == choice_index)
+		
+		return
+
+	# --- FAST PATH: O(1) swap used during real-time UI interactions ---
+	# 1. Get the previously active index from the state
+	var prev_index: int = _current_state.swap_choices.get(opt.resource_name, -1)
+
+	# 2. Early exit if the choice hasn't actually changed
+	if prev_index == choice_index:
+		return
+
+	# 3. Turn OFF the previous mesh
+	if prev_index >= 0 and prev_index < opt.choices.size():
+		var prev_node := _mesh_cache.get(opt.choices[prev_index].mesh_path) as MeshInstance3D
+		if prev_node:
+			prev_node.visible = false
+
+	# 4. Turn ON the new mesh
+	if choice_index >= 0 and choice_index < opt.choices.size():
+		var new_node := _mesh_cache.get(opt.choices[choice_index].mesh_path) as MeshInstance3D
+		if new_node:
+			new_node.visible = true
 
 # The two-level cache (_mesh_cache for the node, _blend_idx_cache for the integer index in the mesh) 
 # means that on the hot path (slider dragged) the only work done is 
@@ -203,7 +229,8 @@ func _apply_full_state(state: CharacterState) -> void:
 	for option_id in state.swap_choices:
 		var opt := _option_map.get(option_id) as MeshSwapOption
 		if opt:
-			_apply_swap(opt, state.swap_choices[option_id])
+			# Pass 'true' to force the loop and clean up dirty scene state
+			_apply_swap(opt, state.swap_choices[option_id], true)
 
 	for option_id in state.color_values:
 		var opt := _option_map.get(option_id) as ColorOption

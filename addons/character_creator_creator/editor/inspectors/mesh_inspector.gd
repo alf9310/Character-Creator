@@ -15,8 +15,10 @@ func inspect(packed_scene: PackedScene) -> Array[OptionDefinition]:
 	var meshes := _find_meshes(root)
 	if not meshes.is_empty():
 		# Swap grouping is name-based across all meshes, not per-sibling
-		results.append_array(_inspect_swap_slots(meshes))
+		results.append_array(_inspect_swap_slots(meshes, root))
 		# TODO: restore blendshape / color / animation passes
+		for mesh in meshes:
+			results.append_array(_inspect_blendshapes(mesh, root))
 
 	temp_host.get_parent().remove_child(temp_host)
 	temp_host.free()
@@ -30,7 +32,7 @@ func inspect(packed_scene: PackedScene) -> Array[OptionDefinition]:
 # TODO: Add custom flags for -default, -include, -required
 static var _splitter := RegEx.create_from_string("[_.,\\-]+")
 
-func _inspect_swap_slots(meshes: Array[MeshInstance3D]) -> Array[OptionDefinition]:
+func _inspect_swap_slots(meshes: Array[MeshInstance3D], root: Node) -> Array[OptionDefinition]:
 	print("Inspecting Mesh Swaps")
 	var groups: Dictionary[String, Array] = {}
 	
@@ -40,7 +42,7 @@ func _inspect_swap_slots(meshes: Array[MeshInstance3D]) -> Array[OptionDefinitio
 		var group := parts[0].capitalize()
 
 		var choice				:= MeshSwapChoice.new()
-		choice.mesh_path		= mesh_node.get_path()
+		choice.mesh_path 		= root.get_path_to(mesh_node)
 		choice.default_choice	= not group in groups  # first mesh in group = default
 		choice.label			= parts[1].capitalize() if parts.size() > 1 else ""
 		choice.include			= parts.size() > 1
@@ -74,7 +76,7 @@ func _find_meshes(root: Node) -> Array[MeshInstance3D]:
 
 
 ## Blendshapes
-func _inspect_blendshapes(mesh_node: MeshInstance3D) -> Array[OptionDefinition]:
+func _inspect_blendshapes(mesh_node: MeshInstance3D, root: Node) -> Array[OptionDefinition]:
 	# TODO: Add debug flag
 	print("Inspecting Mesh Blenshapes")
 	var results: Array[OptionDefinition] = []
@@ -92,7 +94,7 @@ func _inspect_blendshapes(mesh_node: MeshInstance3D) -> Array[OptionDefinition]:
 
 		var opt := BlendshapeOption.new()
 		opt.display_name    = shape_name
-		opt.mesh_path       = mesh_node.get_path()
+		opt.mesh_path       = root.get_path_to(mesh_node)
 		opt.blend_shape_name = shape_name
 		opt.default_value   = mesh_node.get_blend_shape_value(i)
 		opt.min_value       = 0.0
@@ -105,7 +107,7 @@ func _inspect_blendshapes(mesh_node: MeshInstance3D) -> Array[OptionDefinition]:
 ## Color Parameters
 # TODO: Refactor this implementation to be purely blender-uv defined
 # Walks every surface on every MeshInstance3D and looks for color-type shader parameters on ShaderMaterial, falling back to standard albedo/emission on StandardMaterial3D
-func _inspect_color_params(mesh_node: MeshInstance3D) -> Array[OptionDefinition]:
+func _inspect_color_params(mesh_node: MeshInstance3D, root: Node) -> Array[OptionDefinition]:
 	print("Inspecting Mesh Colors")
 	var results: Array[OptionDefinition] = []
 	var seen: Dictionary = {}  # guard against duplicate params across surfaces
@@ -129,7 +131,7 @@ func _inspect_color_params(mesh_node: MeshInstance3D) -> Array[OptionDefinition]
 					seen[pname] = true
 					var opt := ColorOption.new()
 					opt.display_name   = pname.replace("_", " ").capitalize()
-					opt.mesh_path      = mesh_node.get_path()
+					opt.mesh_path      = root.get_path_to(mesh_node)
 					opt.shader_param   = pname
 					opt.default_color  = mat.get_shader_parameter(pname)
 					results.append(opt)
@@ -140,7 +142,7 @@ func _inspect_color_params(mesh_node: MeshInstance3D) -> Array[OptionDefinition]
 			# Expose albedo and emission as the two most useful color options
 			var albedo := ColorOption.new()
 			albedo.display_name  = "Skin color"
-			albedo.mesh_path     = mesh_node.get_path()
+			albedo.mesh_path     = root.get_path_to(mesh_node)
 			albedo.shader_param  = "albedo_color"
 			albedo.default_color = mat.albedo_color
 			results.append(albedo)

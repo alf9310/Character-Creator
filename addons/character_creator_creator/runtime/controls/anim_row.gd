@@ -6,8 +6,8 @@ signal changed(option_id: String, value: Variant)
 @export var option_id:      String = ""
 @export var animation_name: String = ""
 
-@onready var _label:  Label  = %OptionLabel
-@onready var _button: Button = %PreviewButton
+@onready var _label:  Label  = $OptionLabel
+@onready var _button: Button = $PreviewButton
 
 func _ready() -> void:
 	_button.pressed.connect(_on_pressed)

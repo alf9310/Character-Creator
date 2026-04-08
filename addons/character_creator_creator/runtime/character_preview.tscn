@@ -4,14 +4,20 @@
 [ext_resource type="Environment" uid="uid://c3oeyya6rgnd" path="res://addons/character_creator_creator/runtime/environment.tres" id="2_fhqdk"]
 
 [node name="CharacterPreview" type="SubViewportContainer" unique_id=1262837080]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+stretch = true
 script = ExtResource("1_ynnn8")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=1316669584]
 handle_input_locally = false
 msaa_3d = 2
-size = Vector2i(400, 600)
+size = Vector2i(1152, 648)
 size_2d_override_stretch = true
 render_target_update_mode = 4
 

@@ -5,8 +5,8 @@ signal changed(option_id: String, value: Variant)
 
 @export var option_id: String = ""
 
-@onready var _label:  Label             = %OptionLabel
-@onready var _picker: ColorPickerButton = %ColorPicker
+@onready var _label:  Label             = $OptionLabel
+@onready var _picker: ColorPickerButton = $ColorPicker
 
 func _ready() -> void:
 	_picker.color_changed.connect(_on_color_changed)

@@ -8,7 +8,7 @@ signal changed(option_id: String, value: Variant)
 
 @export var option_id: String = ""
 
-@onready var _container: HFlowContainer = %ButtonContainer
+@onready var _container: HFlowContainer = $ButtonContainer
 
 var _btn_group := ButtonGroup.new()
 
@@ -24,6 +24,7 @@ func _ready() -> void:
 
 func _on_button_toggled(active: bool, idx: int) -> void:
 	if active:
+		print("Swap ", idx, " of group ", option_id, " selected")
 		changed.emit(option_id, idx)
 
 func set_choice_no_signal(idx: int) -> void:

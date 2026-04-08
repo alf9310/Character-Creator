@@ -5,9 +5,9 @@ signal changed(option_id: String, value: Variant)
 
 @export var option_id: String = ""
 
-@onready var _label:   Label   = %OptionLabel
-@onready var _slider:  HSlider = %Slider
-@onready var _readout: Label   = %Readout
+@onready var _label:   Label   = $OptionLabel
+@onready var _slider:  HSlider = $Slider
+@onready var _readout: Label   = $Readout
 
 func _ready() -> void:
 	_slider.value_changed.connect(_on_value_changed)

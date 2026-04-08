@@ -1,42 +1,170 @@
 [gd_resource type="Resource" script_class="CharacterConfig" format=3 uid="uid://dia6qil61xxms"]
 
-[ext_resource type="PackedScene" uid="uid://b8e1ao6qa1eot" path="res://character_scenes/character.tscn" id="1_0jexn"]
-[ext_resource type="Script" uid="uid://26be55alb275" path="res://addons/character_creator_creator/data/options/option_definition.gd" id="2_nnc2h"]
-[ext_resource type="Script" uid="uid://cl82yqw1qhtse" path="res://addons/character_creator_creator/data/options/mesh_swap_choice.gd" id="3_884gj"]
-[ext_resource type="Script" uid="uid://bofw38rts1vr7" path="res://addons/character_creator_creator/data/options/mesh_swap_option.gd" id="4_hyahi"]
-[ext_resource type="Script" uid="uid://2nqgowcecxmc" path="res://addons/character_creator_creator/data/character_config.gd" id="5_qm406"]
-
-[sub_resource type="Resource" id="Resource_fwdt2"]
-script = ExtResource("3_884gj")
-label = "001"
-default_choice = true
-mesh_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/low_poly_audrey_refactored/@Node@22376/low_poly_audrey_refactored/metarig/Skeleton3D/spine_006/Glasses_001")
-
-[sub_resource type="Resource" id="Resource_jwooj"]
-resource_name = "opt_glasses"
-script = ExtResource("4_hyahi")
-required = false
-choices = Array[ExtResource("3_884gj")]([SubResource("Resource_fwdt2")])
-group = "Glasses"
+[ext_resource type="PackedScene" uid="uid://b8e1ao6qa1eot" path="res://character_scenes/character.tscn" id="1_nnc2h"]
+[ext_resource type="Script" uid="uid://26be55alb275" path="res://addons/character_creator_creator/data/options/option_definition.gd" id="2_884gj"]
+[ext_resource type="Script" uid="uid://cl82yqw1qhtse" path="res://addons/character_creator_creator/data/options/mesh_swap_choice.gd" id="3_hyahi"]
+[ext_resource type="Script" uid="uid://bofw38rts1vr7" path="res://addons/character_creator_creator/data/options/mesh_swap_option.gd" id="4_qm406"]
+[ext_resource type="Script" uid="uid://0hrfgkngv6ts" path="res://addons/character_creator_creator/data/options/blendshape_option.gd" id="5_gdhbg"]
+[ext_resource type="Script" uid="uid://2nqgowcecxmc" path="res://addons/character_creator_creator/data/character_config.gd" id="6_2ju2g"]
 
 [sub_resource type="Resource" id="Resource_kakko"]
-script = ExtResource("3_884gj")
+script = ExtResource("3_hyahi")
 label = "Bob"
 default_choice = true
-mesh_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/low_poly_audrey_refactored/@Node@22376/low_poly_audrey_refactored/metarig/Skeleton3D/hair_bob")
+mesh_path = NodePath("metarig/Skeleton3D/hair_bob")
 
 [sub_resource type="Resource" id="Resource_4uoa7"]
-script = ExtResource("3_884gj")
+script = ExtResource("3_hyahi")
 label = "Straight"
-mesh_path = NodePath("/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/low_poly_audrey_refactored/@Node@22376/low_poly_audrey_refactored/metarig/Skeleton3D/hair_straight")
+mesh_path = NodePath("metarig/Skeleton3D/hair_straight")
 
 [sub_resource type="Resource" id="Resource_abkgb"]
 resource_name = "opt_hair"
-script = ExtResource("4_hyahi")
-choices = Array[ExtResource("3_884gj")]([SubResource("Resource_kakko"), SubResource("Resource_4uoa7")])
+script = ExtResource("4_qm406")
+choices = Array[ExtResource("3_hyahi")]([SubResource("Resource_kakko"), SubResource("Resource_4uoa7")])
 group = "Hair"
 
+[sub_resource type="Resource" id="Resource_rsj5n"]
+resource_name = "opt_bangs_length"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/bangs_001")
+blend_shape_name = "Bangs Length"
+display_name = "Bangs Length"
+
+[sub_resource type="Resource" id="Resource_lm51k"]
+resource_name = "opt_muscularity_pos"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Body")
+blend_shape_name = "Muscularity_pos"
+display_name = "Muscularity_pos"
+
+[sub_resource type="Resource" id="Resource_ygqkw"]
+resource_name = "opt_muscularity_neg"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Body")
+blend_shape_name = "Muscularity_neg"
+display_name = "Muscularity_neg"
+
+[sub_resource type="Resource" id="Resource_qk1w5"]
+resource_name = "opt_weight_neg"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Body")
+blend_shape_name = "Weight_neg"
+display_name = "Weight_neg"
+
+[sub_resource type="Resource" id="Resource_y60fj"]
+resource_name = "opt_weight_pos"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Body")
+blend_shape_name = "Weight_pos"
+display_name = "Weight_pos"
+
+[sub_resource type="Resource" id="Resource_hqn6r"]
+resource_name = "opt_bust_neg"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Body")
+blend_shape_name = "Bust_neg"
+display_name = "Bust_neg"
+
+[sub_resource type="Resource" id="Resource_iq3tn"]
+resource_name = "opt_bust_pos"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Body")
+blend_shape_name = "Bust_pos"
+display_name = "Bust_pos"
+
+[sub_resource type="Resource" id="Resource_svhw2"]
+resource_name = "opt_curves_neg"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Body")
+blend_shape_name = "Curves_neg"
+display_name = "Curves_neg"
+
+[sub_resource type="Resource" id="Resource_7aw34"]
+resource_name = "opt_curves_pos"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Body")
+blend_shape_name = "Curves_pos"
+display_name = "Curves_pos"
+
+[sub_resource type="Resource" id="Resource_whypv"]
+resource_name = "opt_ear_length_neg"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Ears")
+blend_shape_name = "Ear Length_neg"
+display_name = "Ear Length_neg"
+
+[sub_resource type="Resource" id="Resource_tayfy"]
+resource_name = "opt_ear_length_pos"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Ears")
+blend_shape_name = "Ear Length_pos"
+display_name = "Ear Length_pos"
+
+[sub_resource type="Resource" id="Resource_ba2nn"]
+resource_name = "opt_angle"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/hair_bob")
+blend_shape_name = "angle"
+display_name = "angle"
+
+[sub_resource type="Resource" id="Resource_py7v0"]
+resource_name = "opt_length"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/hair_bob")
+blend_shape_name = "length"
+display_name = "length"
+
+[sub_resource type="Resource" id="Resource_liauo"]
+resource_name = "opt_length_pos"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/hair_straight")
+blend_shape_name = "Length_pos"
+display_name = "Length_pos"
+
+[sub_resource type="Resource" id="Resource_p3u7p"]
+resource_name = "opt_length_neg"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/hair_straight")
+blend_shape_name = "Length_neg"
+display_name = "Length_neg"
+
+[sub_resource type="Resource" id="Resource_iwscm"]
+resource_name = "opt_nose"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Head")
+blend_shape_name = "Nose"
+display_name = "Nose"
+
+[sub_resource type="Resource" id="Resource_ea6ml"]
+resource_name = "opt_cheeks_pos"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Head")
+blend_shape_name = "Cheeks_pos"
+display_name = "Cheeks_pos"
+
+[sub_resource type="Resource" id="Resource_auqxw"]
+resource_name = "opt_cheeks_neg"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Head")
+blend_shape_name = "Cheeks_neg"
+display_name = "Cheeks_neg"
+
+[sub_resource type="Resource" id="Resource_v6g0b"]
+resource_name = "opt_chin_neg"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Head")
+blend_shape_name = "Chin_neg"
+display_name = "Chin_neg"
+
+[sub_resource type="Resource" id="Resource_acndp"]
+resource_name = "opt_chin_pos"
+script = ExtResource("5_gdhbg")
+mesh_path = NodePath("metarig/Skeleton3D/Head")
+blend_shape_name = "Chin_pos"
+display_name = "Chin_pos"
+
 [resource]
-script = ExtResource("5_qm406")
-character_scene = ExtResource("1_0jexn")
-options = Array[ExtResource("2_nnc2h")]([SubResource("Resource_jwooj"), SubResource("Resource_abkgb")])
+script = ExtResource("6_2ju2g")
+character_scene = ExtResource("1_nnc2h")
+options = Array[ExtResource("2_884gj")]([SubResource("Resource_abkgb"), SubResource("Resource_rsj5n"), SubResource("Resource_lm51k"), SubResource("Resource_ygqkw"), SubResource("Resource_qk1w5"), SubResource("Resource_y60fj"), SubResource("Resource_hqn6r"), SubResource("Resource_iq3tn"), SubResource("Resource_svhw2"), SubResource("Resource_7aw34"), SubResource("Resource_whypv"), SubResource("Resource_tayfy"), SubResource("Resource_ba2nn"), SubResource("Resource_py7v0"), SubResource("Resource_liauo"), SubResource("Resource_p3u7p"), SubResource("Resource_iwscm"), SubResource("Resource_ea6ml"), SubResource("Resource_auqxw"), SubResource("Resource_v6g0b"), SubResource("Resource_acndp")])

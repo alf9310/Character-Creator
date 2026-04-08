@@ -102,6 +102,7 @@ size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 
 [node name="BlendshapesList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MarginContainer2" unique_id=1031909007]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -117,6 +118,7 @@ size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 
 [node name="TexturesList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MarginContainer3" unique_id=1409352598]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -132,6 +134,7 @@ size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 
 [node name="AnimationsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MarginContainer4" unique_id=1051522313]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -192,6 +195,9 @@ text = "Generate Scene"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/InputButton" to="." method="_on_input_button_pressed"]
 [connection signal="file_selected" from="MarginContainer/VBoxContainer/HBoxContainer/InputDialog" to="." method="_on_input_dialog_file_selected"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MeshSwaps" to="." method="_on_mesh_swaps_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/Blendshapes" to="." method="_on_blendshapes_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/Textures" to="." method="_on_textures_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/Animations" to="." method="_on_animations_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/OutputButton" to="." method="_on_output_button_pressed"]
 [connection signal="file_selected" from="MarginContainer/VBoxContainer/HBoxContainer2/OutputDialog" to="." method="_on_output_dialog_file_selected"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GenerateButton" to="." method="_on_generate_button_pressed"]
