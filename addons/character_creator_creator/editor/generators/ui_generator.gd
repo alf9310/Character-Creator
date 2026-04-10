@@ -119,6 +119,8 @@ func _build_control(
 		return _build_color_row(opt as ColorOption)
 	if opt is AnimationOption:
 		return _build_anim_row(opt as AnimationOption)
+	if opt is TextureAtlasOption: 
+		return _build_atlas_group(opt as TextureAtlasOption, scene_root)
 
 	push_warning(
 		"[UIGenerator] Unrecognised OptionDefinition subtype '%s' — skipped."
@@ -183,6 +185,25 @@ func _build_anim_row(opt: AnimationOption) -> AnimRow:
 
 	return row
 
+func _build_atlas_group(opt: TextureAtlasOption, scene_root: Node) -> Control:
+	print("\tBuilding atlas group for ", opt.display_name)
+	var group := SwapGroupScene.instantiate() as SwapGroup
+	group.name      = "AtlasGroup_" + opt.resource_name
+	group.option_id = opt.resource_name
+
+	group.find_child("OptionLabel", true, false).text = opt.display_name
+
+	var container := group.find_child("ButtonContainer", true, false) as HFlowContainer
+
+	for i in range(opt.choice_labels.size()):
+		var btn    := Button.new()
+		btn.name        = "Choice_%d" % i
+		btn.text        = opt.choice_labels[i]
+		btn.toggle_mode = true
+		btn.button_pressed = (i == opt.default_choice)
+		container.add_child(btn)
+
+	return group
 
 # ---------------------------------------------------------------------------
 # Footer

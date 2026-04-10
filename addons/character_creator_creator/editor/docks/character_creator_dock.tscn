@@ -69,75 +69,11 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 
-[node name="OptionsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=2123009137]
+[node name="CategoriesList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=2123009137]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
-
-[node name="MeshSwaps" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList" unique_id=2028994905]
-layout_mode = 2
-tooltip_text = "Format mesh names as group_name"
-button_pressed = true
-text = "Mesh Swaps"
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList" unique_id=587443973]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-
-[node name="MeshSwapsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MarginContainer" unique_id=1972655630]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Blendshapes" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList" unique_id=2129965635]
-layout_mode = 2
-button_pressed = true
-text = "Blendshapes"
-
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList" unique_id=182101951]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-
-[node name="BlendshapesList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MarginContainer2" unique_id=1031909007]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Textures" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList" unique_id=1585733598]
-layout_mode = 2
-button_pressed = true
-text = "Textures"
-
-[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList" unique_id=796926259]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-
-[node name="TexturesList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MarginContainer3" unique_id=1409352598]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Animations" type="CheckBox" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList" unique_id=1124864665]
-layout_mode = 2
-button_pressed = true
-text = "Animations"
-
-[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList" unique_id=1892771998]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-
-[node name="AnimationsList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MarginContainer4" unique_id=1051522313]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=2077632103]
 layout_mode = 2
@@ -194,10 +130,6 @@ text = "Generate Scene"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/InputButton" to="." method="_on_input_button_pressed"]
 [connection signal="file_selected" from="MarginContainer/VBoxContainer/HBoxContainer/InputDialog" to="." method="_on_input_dialog_file_selected"]
-[connection signal="toggled" from="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/MeshSwaps" to="." method="_on_mesh_swaps_toggled"]
-[connection signal="toggled" from="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/Blendshapes" to="." method="_on_blendshapes_toggled"]
-[connection signal="toggled" from="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/Textures" to="." method="_on_textures_toggled"]
-[connection signal="toggled" from="MarginContainer/VBoxContainer/ScrollContainer/OptionsList/Animations" to="." method="_on_animations_toggled"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/OutputButton" to="." method="_on_output_button_pressed"]
 [connection signal="file_selected" from="MarginContainer/VBoxContainer/HBoxContainer2/OutputDialog" to="." method="_on_output_dialog_file_selected"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GenerateButton" to="." method="_on_generate_button_pressed"]

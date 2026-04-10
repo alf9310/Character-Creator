@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://b8e1ao6qa1eot"]
-
-[ext_resource type="PackedScene" uid="uid://jbhvp5up121g" path="res://meshes/low_poly_audrey_refactored.glb" id="1_1ywh6"]
-
-[node name="low_poly_audrey_refactored" unique_id=1335177364 instance=ExtResource("1_1ywh6")]

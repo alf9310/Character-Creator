@@ -1,11 +1,20 @@
 [gd_resource type="Environment" format=3 uid="uid://c3oeyya6rgnd"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ynnn8"]
+[ext_resource type="Shader" uid="uid://4kiagxlawmip" path="res://addons/character_creator_creator/runtime/sokpop.gdshader" id="1_qdfma"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gudc1"]
+shader = ExtResource("1_qdfma")
+shader_parameter/color_top = Color(0.43410587, 0.25735506, 0.7566662, 1)
+shader_parameter/color_horizon = Color(0.6133478, 0.29809678, 0.4820497, 1)
+shader_parameter/color_bottom = Color(0.9105849, 0.7688361, 0.6143399, 1)
+shader_parameter/exponent_factor_top = 1.0
+shader_parameter/exponent_factor_bottom = 1.0
+shader_parameter/intensity_amp = 1.0
 
 [sub_resource type="Sky" id="Sky_fhqdk"]
-sky_material = SubResource("ProceduralSkyMaterial_ynnn8")
+sky_material = SubResource("ShaderMaterial_gudc1")
 
 [resource]
-background_mode = 1
-background_color = Color(0.65163547, 0.54544276, 0.9242745, 1)
+background_mode = 2
+background_color = Color(0.46502316, 0.72029567, 0.8634698, 1)
 sky = SubResource("Sky_fhqdk")

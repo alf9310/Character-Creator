@@ -38,6 +38,7 @@ transform = Transform3D(0.70710677, 0.4055798, -0.579228, 0, 0.81915206, 0.57357
 light_color = Color(1, 0.98669523, 0.9639762, 1)
 light_energy = 1.2
 shadow_enabled = true
+shadow_blur = 2.0
 
 [node name="FillLight" type="DirectionalLight3D" parent="SubViewport" unique_id=220680306]
 transform = Transform3D(-0.70710677, -0.1830127, 0.68301266, 0, 0.9659258, 0.25881904, -0.70710677, 0.1830127, -0.68301266, 0, 0, 0)

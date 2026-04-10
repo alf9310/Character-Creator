@@ -85,6 +85,13 @@ func _build_base_tree(config: CharacterConfig) -> Node:
 	ui.set_script(
 		load("res://addons/character_creator_creator/runtime/creator_ui.gd")
 	)
+	
+	# Anchor the UI to the left 25% of the screen
+	ui.anchor_left   = 0.0
+	ui.anchor_top    = 0.0
+	ui.anchor_right  = 0.25
+	ui.anchor_bottom = 1.0
+	
 	root.add_child(ui)
 	ui.owner = root
 	root.ui   = ui

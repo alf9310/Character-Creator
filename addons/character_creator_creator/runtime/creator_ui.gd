@@ -71,6 +71,7 @@ func hide_randomize_button() -> void:
 ## Syncing controls to a loaded state.
 ## Uses the UIGenerator's custom row APIs to mutate values without triggering signals.
 func apply_state(state: CharacterState) -> void:
+	# ALSO HANDLES TEXTURE ATLASES!
 	for option_id in state.swap_choices:
 		var control = _control_map.get(option_id)
 		if control is SwapGroup:

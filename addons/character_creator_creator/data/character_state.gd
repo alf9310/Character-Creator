@@ -34,8 +34,10 @@ static func from_config(config: CharacterConfig) -> CharacterState:
 			state.swap_choices[opt.resource_name] = opt.default_choice
 		elif opt is ColorOption:
 			state.color_values[opt.resource_name] = opt.default_color
+		elif opt is TextureAtlasOption:
+			state.swap_choices[opt.resource_name] = opt.default_choice
 		elif opt is AnimationOption:
-			if opt.include_in_export:
+			if opt.include_in_export and opt.is_default:
 				state.animation_choices[opt.resource_name] = opt.animation_name
 
 	state.last_modified = Time.get_unix_time_from_system()
@@ -72,12 +74,11 @@ static func randomized(config: CharacterConfig) -> CharacterState:
 			# to avoid outputting unreadable or invisible colors
 			# TODO: expose these as fields on CharacterConfig for games that want a wider or narrower palette
 			var h := randf()
-			var s := randf_range(0.4, 0.9)
+			var s := randf_range(0.0, 0.7)
 			var v := randf_range(0.4, 0.95)
 			state.color_values[opt.resource_name] = Color.from_hsv(h, s, v)
-		elif opt is AnimationOption:
-			if opt.include_in_export:
-				state.animation_choices[opt.resource_name] = opt.animation_name
+		elif opt is TextureAtlasOption:
+			state.swap_choices[opt.resource_name] = randi() % opt.choice_labels.size()
 
 	state.last_modified = Time.get_unix_time_from_system()
 	return state

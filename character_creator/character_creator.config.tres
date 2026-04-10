@@ -1,0 +1,310 @@
+[gd_resource type="Resource" script_class="CharacterConfig" format=3 uid="uid://b2l4qa6ud72k5"]
+
+[ext_resource type="PackedScene" uid="uid://ct1l51kbo61lw" path="res://character_scenes/low_poly_audrey_simple.tscn" id="1_mpujq"]
+[ext_resource type="Script" uid="uid://26be55alb275" path="res://addons/character_creator_creator/data/options/option_definition.gd" id="2_3gk70"]
+[ext_resource type="Script" uid="uid://cl82yqw1qhtse" path="res://addons/character_creator_creator/data/options/mesh_swap_choice.gd" id="3_urubr"]
+[ext_resource type="Script" uid="uid://bofw38rts1vr7" path="res://addons/character_creator_creator/data/options/mesh_swap_option.gd" id="4_u85ei"]
+[ext_resource type="Script" uid="uid://0hrfgkngv6ts" path="res://addons/character_creator_creator/data/options/blendshape_option.gd" id="5_4hcw1"]
+[ext_resource type="Script" uid="uid://br33vwmpe8w03" path="res://addons/character_creator_creator/data/options/color_option.gd" id="6_b2qk6"]
+[ext_resource type="Script" uid="uid://dxaxw0w4isq3m" path="res://addons/character_creator_creator/data/options/texture_atlas_option.gd" id="7_liv22"]
+[ext_resource type="Script" uid="uid://175jingv1e2r" path="res://addons/character_creator_creator/data/options/animation_option.gd" id="8_vof15"]
+[ext_resource type="Script" uid="uid://2nqgowcecxmc" path="res://addons/character_creator_creator/data/character_config.gd" id="9_wqh6y"]
+
+[sub_resource type="Resource" id="Resource_gyfhh"]
+script = ExtResource("3_urubr")
+label = "None"
+
+[sub_resource type="Resource" id="Resource_rrge4"]
+script = ExtResource("3_urubr")
+label = "Bangs"
+default_choice = true
+mesh_path = NodePath("metarig/Skeleton3D/Bangs")
+
+[sub_resource type="Resource" id="Resource_h8t5a"]
+resource_name = "swap_bangs"
+script = ExtResource("4_u85ei")
+required = false
+choices = Array[ExtResource("3_urubr")]([SubResource("Resource_gyfhh"), SubResource("Resource_rrge4")])
+default_choice = 1
+group = "Bangs"
+
+[sub_resource type="Resource" id="Resource_poqx8"]
+resource_name = "blend_bangs_bangs_length"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Bangs")])
+editor_groups = Array[String](["Bangs"])
+blend_shape_name = "Bangs Length"
+display_name = "Bangs Length"
+group = "Bangs"
+
+[sub_resource type="Resource" id="Resource_q7edx"]
+resource_name = "color_bangs_hair_color"
+script = ExtResource("6_b2qk6")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Bangs")])
+shader_param = "albedo_color"
+default_color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Bangs"])
+display_name = "Hair Color"
+group = "Bangs"
+
+[sub_resource type="Resource" id="Resource_6e80p"]
+script = ExtResource("3_urubr")
+label = "None"
+
+[sub_resource type="Resource" id="Resource_ow56g"]
+script = ExtResource("3_urubr")
+label = "Beard"
+mesh_path = NodePath("metarig/Skeleton3D/Beard")
+
+[sub_resource type="Resource" id="Resource_vhfd2"]
+resource_name = "swap_beard"
+script = ExtResource("4_u85ei")
+required = false
+choices = Array[ExtResource("3_urubr")]([SubResource("Resource_6e80p"), SubResource("Resource_ow56g")])
+group = "Beard"
+
+[sub_resource type="Resource" id="Resource_ydfh7"]
+resource_name = "color_beard_hair_color"
+script = ExtResource("6_b2qk6")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Beard")])
+shader_param = "albedo_color"
+default_color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Beard"])
+display_name = "Hair Color"
+group = "Beard"
+
+[sub_resource type="Resource" id="Resource_ru1b3"]
+resource_name = "color_belt_belt_color"
+script = ExtResource("6_b2qk6")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Belt")])
+shader_param = "albedo_color"
+default_color = Color(0.34217715, 0.27710128, 0.26855746, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Belt"])
+display_name = "Belt Color"
+group = "Belt"
+
+[sub_resource type="Resource" id="Resource_6cb4e"]
+resource_name = "blend_body_weight"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Belt"), NodePath("metarig/Skeleton3D/Body"), NodePath("metarig/Skeleton3D/Pants"), NodePath("metarig/Skeleton3D/Shirt"), NodePath("metarig/Skeleton3D/Shoes")])
+editor_groups = Array[String](["Belt", "Body", "Pants", "Shirt", "Shoes"])
+blend_shape_name = "Weight"
+display_name = "Weight"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_wrxio"]
+resource_name = "blend_body_muscularity"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Body"), NodePath("metarig/Skeleton3D/Pants"), NodePath("metarig/Skeleton3D/Shirt")])
+editor_groups = Array[String](["Body", "Pants", "Shirt"])
+blend_shape_name = "Muscularity"
+display_name = "Muscularity"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_36n8s"]
+resource_name = "blend_body_bust"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Body"), NodePath("metarig/Skeleton3D/Shirt")])
+editor_groups = Array[String](["Body", "Shirt"])
+blend_shape_name = "Bust"
+display_name = "Bust"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_erljc"]
+resource_name = "blend_body_waist"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Body"), NodePath("metarig/Skeleton3D/Pants")])
+editor_groups = Array[String](["Body", "Pants"])
+blend_shape_name = "Waist"
+display_name = "Waist"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_e7bg2"]
+resource_name = "color_body_skin_color"
+script = ExtResource("6_b2qk6")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Body")])
+shader_param = "albedo_color"
+default_color = Color(0.866485, 0.71605873, 0.63022107, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Body"])
+display_name = "Skin Color"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_0gx4s"]
+resource_name = "atlas_eye_left_left_eye"
+script = ExtResource("7_liv22")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Eye Left")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Eye Left"])
+display_name = "Left Eye"
+group = "Eye Left"
+
+[sub_resource type="Resource" id="Resource_gqtey"]
+resource_name = "atlas_eye_right_right_eye"
+script = ExtResource("7_liv22")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Eye Right")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Eye Right"])
+display_name = "Right Eye"
+group = "Eye Right"
+
+[sub_resource type="Resource" id="Resource_h4n76"]
+resource_name = "atlas_eyebrow_left_left_eyebrow"
+script = ExtResource("7_liv22")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Eyebrow Left")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Eyebrow Left"])
+display_name = "Left Eyebrow"
+group = "Eyebrow Left"
+
+[sub_resource type="Resource" id="Resource_aeq6p"]
+resource_name = "atlas_eyebrow_right_right_eyebrow"
+script = ExtResource("7_liv22")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Eyebrow Right")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Eyebrow Right"])
+display_name = "Right Eyebrow"
+group = "Eyebrow Right"
+
+[sub_resource type="Resource" id="Resource_eh7dy"]
+script = ExtResource("3_urubr")
+label = "None"
+
+[sub_resource type="Resource" id="Resource_wn8na"]
+script = ExtResource("3_urubr")
+label = "Default"
+default_choice = true
+mesh_path = NodePath("metarig/Skeleton3D/Hair")
+
+[sub_resource type="Resource" id="Resource_moxio"]
+resource_name = "swap_hair"
+script = ExtResource("4_u85ei")
+required = false
+choices = Array[ExtResource("3_urubr")]([SubResource("Resource_eh7dy"), SubResource("Resource_wn8na")])
+default_choice = 1
+group = "Hair"
+
+[sub_resource type="Resource" id="Resource_nlnfs"]
+resource_name = "blend_hair_length"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Hair")])
+editor_groups = Array[String](["Hair"])
+blend_shape_name = "Length"
+display_name = "Length"
+group = "Hair"
+
+[sub_resource type="Resource" id="Resource_3kpu8"]
+resource_name = "color_hair_hair_color"
+script = ExtResource("6_b2qk6")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Hair")])
+shader_param = "albedo_color"
+default_color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Hair"])
+display_name = "Hair Color"
+group = "Hair"
+
+[sub_resource type="Resource" id="Resource_vm17e"]
+resource_name = "blend_head_nose"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Beard"), NodePath("metarig/Skeleton3D/Eye Left"), NodePath("metarig/Skeleton3D/Eye Right"), NodePath("metarig/Skeleton3D/Head"), NodePath("metarig/Skeleton3D/Mouth")])
+editor_groups = Array[String](["Beard", "Eye Left", "Eye Right", "Head", "Mouth"])
+blend_shape_name = "Nose"
+display_name = "Nose"
+group = "Head"
+
+[sub_resource type="Resource" id="Resource_d2c2y"]
+resource_name = "blend_head_cheeks"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Beard"), NodePath("metarig/Skeleton3D/Eye Left"), NodePath("metarig/Skeleton3D/Eye Right"), NodePath("metarig/Skeleton3D/Head"), NodePath("metarig/Skeleton3D/Mouth")])
+editor_groups = Array[String](["Beard", "Eye Left", "Eye Right", "Head", "Mouth"])
+blend_shape_name = "Cheeks"
+display_name = "Cheeks"
+group = "Head"
+
+[sub_resource type="Resource" id="Resource_jdgv8"]
+resource_name = "blend_head_chin"
+script = ExtResource("5_4hcw1")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Beard"), NodePath("metarig/Skeleton3D/Head"), NodePath("metarig/Skeleton3D/Mouth")])
+editor_groups = Array[String](["Beard", "Head", "Mouth"])
+blend_shape_name = "Chin"
+display_name = "Chin"
+group = "Head"
+
+[sub_resource type="Resource" id="Resource_lw2ui"]
+resource_name = "atlas_mouth_mouth"
+script = ExtResource("7_liv22")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Mouth")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Mouth"])
+display_name = "Mouth"
+group = "Mouth"
+
+[sub_resource type="Resource" id="Resource_vw2tn"]
+resource_name = "color_pants_pants_color"
+script = ExtResource("6_b2qk6")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Pants")])
+shader_param = "albedo_color"
+default_color = Color(0.31503034, 0.46069565, 0.5253031, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Pants"])
+display_name = "Pants Color"
+group = "Pants"
+
+[sub_resource type="Resource" id="Resource_xd4m4"]
+resource_name = "color_shirt_shirt_color"
+script = ExtResource("6_b2qk6")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Shirt")])
+shader_param = "albedo_color"
+default_color = Color(0.27135912, 0.30379024, 0.20197356, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Shirt"])
+display_name = "Shirt Color"
+group = "Shirt"
+
+[sub_resource type="Resource" id="Resource_fi8is"]
+resource_name = "color_shoes_shoes_color"
+script = ExtResource("6_b2qk6")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Shoes")])
+shader_param = "albedo_color"
+default_color = Color(0.41590208, 0.34729263, 0.34270334, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Shoes"])
+display_name = "Shoes Color"
+group = "Shoes"
+
+[sub_resource type="Resource" id="Resource_x12ox"]
+resource_name = "anim_a_pose"
+script = ExtResource("8_vof15")
+animation_player_path = NodePath("AnimationPlayer")
+animation_name = "A-Pose"
+loop_in_preview = true
+display_name = "A Pose"
+group = "Poses"
+
+[sub_resource type="Resource" id="Resource_lec78"]
+resource_name = "anim_idle"
+script = ExtResource("8_vof15")
+animation_player_path = NodePath("AnimationPlayer")
+animation_name = "Idle"
+loop_in_preview = true
+is_default = true
+display_name = "Idle"
+group = "Poses"
+
+[sub_resource type="Resource" id="Resource_t700e"]
+resource_name = "anim_t_pose"
+script = ExtResource("8_vof15")
+animation_player_path = NodePath("AnimationPlayer")
+animation_name = "T-Pose"
+loop_in_preview = true
+display_name = "T Pose"
+group = "Poses"
+
+[resource]
+script = ExtResource("9_wqh6y")
+character_scene = ExtResource("1_mpujq")
+options = Array[ExtResource("2_3gk70")]([SubResource("Resource_h8t5a"), SubResource("Resource_poqx8"), SubResource("Resource_q7edx"), SubResource("Resource_vhfd2"), SubResource("Resource_ydfh7"), SubResource("Resource_ru1b3"), SubResource("Resource_6cb4e"), SubResource("Resource_wrxio"), SubResource("Resource_36n8s"), SubResource("Resource_erljc"), SubResource("Resource_e7bg2"), SubResource("Resource_0gx4s"), SubResource("Resource_gqtey"), SubResource("Resource_h4n76"), SubResource("Resource_aeq6p"), SubResource("Resource_moxio"), SubResource("Resource_nlnfs"), SubResource("Resource_3kpu8"), SubResource("Resource_vm17e"), SubResource("Resource_d2c2y"), SubResource("Resource_jdgv8"), SubResource("Resource_lw2ui"), SubResource("Resource_vw2tn"), SubResource("Resource_xd4m4"), SubResource("Resource_fi8is"), SubResource("Resource_x12ox"), SubResource("Resource_lec78"), SubResource("Resource_t700e")])

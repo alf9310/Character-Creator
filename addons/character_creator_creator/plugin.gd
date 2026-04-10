@@ -28,6 +28,7 @@ func _enter_tree() -> void:
 	add_custom_type("MeshSwapOption",       "Resource", preload("data/options/mesh_swap_option.gd"),  preload("icons/option.svg"))
 	add_custom_type("ColorOption",          "Resource", preload("data/options/color_option.gd"),       preload("icons/option.svg"))
 	add_custom_type("AnimationOption",      "Resource", preload("data/options/animation_option.gd"),   preload("icons/option.svg"))
+	add_custom_type("TextureAtlasOption",      "Resource", preload("data/options/texture_atlas_option.gd"),   preload("icons/option.svg"))
 
 
 func _exit_tree() -> void:
@@ -42,3 +43,4 @@ func _exit_tree() -> void:
 	remove_custom_type("MeshSwapOption")
 	remove_custom_type("ColorOption")
 	remove_custom_type("AnimationOption")
+	remove_custom_type("TextureAtlasOption")

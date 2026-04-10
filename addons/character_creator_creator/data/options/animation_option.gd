@@ -19,6 +19,9 @@ extends OptionDefinition
 ## If false, it's preview-only and not saved to CharacterState.
 @export var include_in_export: bool = true
 
+## If true, this animation is applied when the character creator first opens.
+@export var is_default: bool = false
+
 func _to_string() -> String:
 	return "AnimationOption(%s | %s → %s | loop: %s | export: %s)" % [
 		display_name, animation_player_path, animation_name,

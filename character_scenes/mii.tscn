@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://bowrsgc13yrmk"]
-
-[ext_resource type="PackedScene" uid="uid://gmwmtsri0uvv" path="res://meshes/Mii_Maker_for_4.1_v2.blend" id="1_tqes7"]
-
-[node name="Mii_Maker_for_4_1_v2" unique_id=1945501030 instance=ExtResource("1_tqes7")]

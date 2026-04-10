@@ -1,0 +1,1237 @@
+[gd_scene format=3 uid="uid://n6jtlstkvr6s"]
+
+[ext_resource type="Script" uid="uid://e5057q7jrfvo" path="res://addons/character_creator_creator/runtime/character_creator.gd" id="1_gyfhh"]
+[ext_resource type="PackedScene" uid="uid://ct1l51kbo61lw" path="res://character_scenes/low_poly_audrey_simple.tscn" id="2_rrge4"]
+[ext_resource type="Script" uid="uid://26be55alb275" path="res://addons/character_creator_creator/data/options/option_definition.gd" id="3_h8t5a"]
+[ext_resource type="Script" uid="uid://cl82yqw1qhtse" path="res://addons/character_creator_creator/data/options/mesh_swap_choice.gd" id="4_6e80p"]
+[ext_resource type="Script" uid="uid://bofw38rts1vr7" path="res://addons/character_creator_creator/data/options/mesh_swap_option.gd" id="5_ow56g"]
+[ext_resource type="Script" uid="uid://0hrfgkngv6ts" path="res://addons/character_creator_creator/data/options/blendshape_option.gd" id="6_vhfd2"]
+[ext_resource type="Script" uid="uid://br33vwmpe8w03" path="res://addons/character_creator_creator/data/options/color_option.gd" id="7_eh7dy"]
+[ext_resource type="Script" uid="uid://dxaxw0w4isq3m" path="res://addons/character_creator_creator/data/options/texture_atlas_option.gd" id="8_wn8na"]
+[ext_resource type="Script" uid="uid://175jingv1e2r" path="res://addons/character_creator_creator/data/options/animation_option.gd" id="9_moxio"]
+[ext_resource type="Script" uid="uid://2nqgowcecxmc" path="res://addons/character_creator_creator/data/character_config.gd" id="10_gswbg"]
+[ext_resource type="Script" uid="uid://dw4ticq08ga4c" path="res://addons/character_creator_creator/runtime/character_preview.gd" id="11_l2eci"]
+[ext_resource type="Environment" uid="uid://c3oeyya6rgnd" path="res://addons/character_creator_creator/runtime/environment.tres" id="12_rikl1"]
+[ext_resource type="Script" uid="uid://byr6baa6akjie" path="res://addons/character_creator_creator/runtime/creator_ui.gd" id="13_td3e6"]
+[ext_resource type="Script" uid="uid://diyugg21tehn7" path="res://addons/character_creator_creator/runtime/controls/swap_group.gd" id="14_hcn5q"]
+[ext_resource type="Script" uid="uid://ciff6k4d3wd5m" path="res://addons/character_creator_creator/runtime/controls/slider_row.gd" id="15_y2ckf"]
+[ext_resource type="Script" uid="uid://cds07wrpoy6ma" path="res://addons/character_creator_creator/runtime/controls/color_row.gd" id="16_lc8ry"]
+[ext_resource type="Script" uid="uid://ctohacq7g2cnu" path="res://addons/character_creator_creator/runtime/controls/anim_row.gd" id="17_kbvq5"]
+[ext_resource type="Script" uid="uid://bi6gctimk05cv" path="res://addons/character_creator_creator/runtime/character_exporter.gd" id="18_wywsg"]
+
+[sub_resource type="Resource" id="Resource_gyfhh"]
+script = ExtResource("4_6e80p")
+label = "None"
+
+[sub_resource type="Resource" id="Resource_rrge4"]
+script = ExtResource("4_6e80p")
+label = "Bangs"
+default_choice = true
+mesh_path = NodePath("metarig/Skeleton3D/Bangs")
+
+[sub_resource type="Resource" id="Resource_h8t5a"]
+resource_name = "swap_bangs"
+script = ExtResource("5_ow56g")
+required = false
+choices = Array[ExtResource("4_6e80p")]([SubResource("Resource_gyfhh"), SubResource("Resource_rrge4")])
+default_choice = 1
+group = "Bangs"
+
+[sub_resource type="Resource" id="Resource_poqx8"]
+resource_name = "blend_bangs_bangs_length"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Bangs")])
+editor_groups = Array[String](["Bangs"])
+blend_shape_name = "Bangs Length"
+display_name = "Bangs Length"
+group = "Bangs"
+
+[sub_resource type="Resource" id="Resource_q7edx"]
+resource_name = "color_bangs_hair_color"
+script = ExtResource("7_eh7dy")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Bangs")])
+shader_param = "albedo_color"
+default_color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Bangs"])
+display_name = "Hair Color"
+group = "Bangs"
+
+[sub_resource type="Resource" id="Resource_6e80p"]
+script = ExtResource("4_6e80p")
+label = "None"
+
+[sub_resource type="Resource" id="Resource_ow56g"]
+script = ExtResource("4_6e80p")
+label = "Beard"
+mesh_path = NodePath("metarig/Skeleton3D/Beard")
+
+[sub_resource type="Resource" id="Resource_vhfd2"]
+resource_name = "swap_beard"
+script = ExtResource("5_ow56g")
+required = false
+choices = Array[ExtResource("4_6e80p")]([SubResource("Resource_6e80p"), SubResource("Resource_ow56g")])
+group = "Beard"
+
+[sub_resource type="Resource" id="Resource_ydfh7"]
+resource_name = "color_beard_hair_color"
+script = ExtResource("7_eh7dy")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Beard")])
+shader_param = "albedo_color"
+default_color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Beard"])
+display_name = "Hair Color"
+group = "Beard"
+
+[sub_resource type="Resource" id="Resource_ru1b3"]
+resource_name = "color_belt_belt_color"
+script = ExtResource("7_eh7dy")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Belt")])
+shader_param = "albedo_color"
+default_color = Color(0.34217715, 0.27710128, 0.26855746, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Belt"])
+display_name = "Belt Color"
+group = "Belt"
+
+[sub_resource type="Resource" id="Resource_6cb4e"]
+resource_name = "blend_body_weight"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Belt"), NodePath("metarig/Skeleton3D/Body"), NodePath("metarig/Skeleton3D/Pants"), NodePath("metarig/Skeleton3D/Shirt"), NodePath("metarig/Skeleton3D/Shoes")])
+editor_groups = Array[String](["Belt", "Body", "Pants", "Shirt", "Shoes"])
+blend_shape_name = "Weight"
+display_name = "Weight"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_wrxio"]
+resource_name = "blend_body_muscularity"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Body"), NodePath("metarig/Skeleton3D/Pants"), NodePath("metarig/Skeleton3D/Shirt")])
+editor_groups = Array[String](["Body", "Pants", "Shirt"])
+blend_shape_name = "Muscularity"
+display_name = "Muscularity"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_36n8s"]
+resource_name = "blend_body_bust"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Body"), NodePath("metarig/Skeleton3D/Shirt")])
+editor_groups = Array[String](["Body", "Shirt"])
+blend_shape_name = "Bust"
+display_name = "Bust"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_erljc"]
+resource_name = "blend_body_waist"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Body"), NodePath("metarig/Skeleton3D/Pants")])
+editor_groups = Array[String](["Body", "Pants"])
+blend_shape_name = "Waist"
+display_name = "Waist"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_e7bg2"]
+resource_name = "color_body_skin_color"
+script = ExtResource("7_eh7dy")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Body")])
+shader_param = "albedo_color"
+default_color = Color(0.866485, 0.71605873, 0.63022107, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Body"])
+display_name = "Skin Color"
+group = "Body"
+
+[sub_resource type="Resource" id="Resource_0gx4s"]
+resource_name = "atlas_eye_left_left_eye"
+script = ExtResource("8_wn8na")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Eye Left")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Eye Left"])
+display_name = "Left Eye"
+group = "Eye Left"
+
+[sub_resource type="Resource" id="Resource_gqtey"]
+resource_name = "atlas_eye_right_right_eye"
+script = ExtResource("8_wn8na")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Eye Right")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Eye Right"])
+display_name = "Right Eye"
+group = "Eye Right"
+
+[sub_resource type="Resource" id="Resource_h4n76"]
+resource_name = "atlas_eyebrow_left_left_eyebrow"
+script = ExtResource("8_wn8na")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Eyebrow Left")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Eyebrow Left"])
+display_name = "Left Eyebrow"
+group = "Eyebrow Left"
+
+[sub_resource type="Resource" id="Resource_aeq6p"]
+resource_name = "atlas_eyebrow_right_right_eyebrow"
+script = ExtResource("8_wn8na")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Eyebrow Right")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Eyebrow Right"])
+display_name = "Right Eyebrow"
+group = "Eyebrow Right"
+
+[sub_resource type="Resource" id="Resource_eh7dy"]
+script = ExtResource("4_6e80p")
+label = "None"
+
+[sub_resource type="Resource" id="Resource_wn8na"]
+script = ExtResource("4_6e80p")
+label = "Default"
+default_choice = true
+mesh_path = NodePath("metarig/Skeleton3D/Hair")
+
+[sub_resource type="Resource" id="Resource_moxio"]
+resource_name = "swap_hair"
+script = ExtResource("5_ow56g")
+required = false
+choices = Array[ExtResource("4_6e80p")]([SubResource("Resource_eh7dy"), SubResource("Resource_wn8na")])
+default_choice = 1
+group = "Hair"
+
+[sub_resource type="Resource" id="Resource_nlnfs"]
+resource_name = "blend_hair_length"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Hair")])
+editor_groups = Array[String](["Hair"])
+blend_shape_name = "Length"
+display_name = "Length"
+group = "Hair"
+
+[sub_resource type="Resource" id="Resource_3kpu8"]
+resource_name = "color_hair_hair_color"
+script = ExtResource("7_eh7dy")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Hair")])
+shader_param = "albedo_color"
+default_color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Hair"])
+display_name = "Hair Color"
+group = "Hair"
+
+[sub_resource type="Resource" id="Resource_vm17e"]
+resource_name = "blend_head_nose"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Beard"), NodePath("metarig/Skeleton3D/Eye Left"), NodePath("metarig/Skeleton3D/Eye Right"), NodePath("metarig/Skeleton3D/Head"), NodePath("metarig/Skeleton3D/Mouth")])
+editor_groups = Array[String](["Beard", "Eye Left", "Eye Right", "Head", "Mouth"])
+blend_shape_name = "Nose"
+display_name = "Nose"
+group = "Head"
+
+[sub_resource type="Resource" id="Resource_d2c2y"]
+resource_name = "blend_head_cheeks"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Beard"), NodePath("metarig/Skeleton3D/Eye Left"), NodePath("metarig/Skeleton3D/Eye Right"), NodePath("metarig/Skeleton3D/Head"), NodePath("metarig/Skeleton3D/Mouth")])
+editor_groups = Array[String](["Beard", "Eye Left", "Eye Right", "Head", "Mouth"])
+blend_shape_name = "Cheeks"
+display_name = "Cheeks"
+group = "Head"
+
+[sub_resource type="Resource" id="Resource_jdgv8"]
+resource_name = "blend_head_chin"
+script = ExtResource("6_vhfd2")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Beard"), NodePath("metarig/Skeleton3D/Head"), NodePath("metarig/Skeleton3D/Mouth")])
+editor_groups = Array[String](["Beard", "Head", "Mouth"])
+blend_shape_name = "Chin"
+display_name = "Chin"
+group = "Head"
+
+[sub_resource type="Resource" id="Resource_lw2ui"]
+resource_name = "atlas_mouth_mouth"
+script = ExtResource("8_wn8na")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Mouth")])
+choice_labels = Array[String](["Style 1", "Style 2", "Style 3", "Style 4"])
+editor_groups = Array[String](["Mouth"])
+display_name = "Mouth"
+group = "Mouth"
+
+[sub_resource type="Resource" id="Resource_vw2tn"]
+resource_name = "color_pants_pants_color"
+script = ExtResource("7_eh7dy")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Pants")])
+shader_param = "albedo_color"
+default_color = Color(0.31503034, 0.46069565, 0.5253031, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Pants"])
+display_name = "Pants Color"
+group = "Pants"
+
+[sub_resource type="Resource" id="Resource_xd4m4"]
+resource_name = "color_shirt_shirt_color"
+script = ExtResource("7_eh7dy")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Shirt")])
+shader_param = "albedo_color"
+default_color = Color(0.27135912, 0.30379024, 0.20197356, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Shirt"])
+display_name = "Shirt Color"
+group = "Shirt"
+
+[sub_resource type="Resource" id="Resource_fi8is"]
+resource_name = "color_shoes_shoes_color"
+script = ExtResource("7_eh7dy")
+mesh_paths = Array[NodePath]([NodePath("metarig/Skeleton3D/Shoes")])
+shader_param = "albedo_color"
+default_color = Color(0.41590208, 0.34729263, 0.34270334, 1)
+apply_to_shared_material = true
+editor_groups = Array[String](["Shoes"])
+display_name = "Shoes Color"
+group = "Shoes"
+
+[sub_resource type="Resource" id="Resource_x12ox"]
+resource_name = "anim_a_pose"
+script = ExtResource("9_moxio")
+animation_player_path = NodePath("AnimationPlayer")
+animation_name = "A-Pose"
+loop_in_preview = true
+display_name = "A Pose"
+group = "Poses"
+
+[sub_resource type="Resource" id="Resource_lec78"]
+resource_name = "anim_idle"
+script = ExtResource("9_moxio")
+animation_player_path = NodePath("AnimationPlayer")
+animation_name = "Idle"
+loop_in_preview = true
+is_default = true
+display_name = "Idle"
+group = "Poses"
+
+[sub_resource type="Resource" id="Resource_t700e"]
+resource_name = "anim_t_pose"
+script = ExtResource("9_moxio")
+animation_player_path = NodePath("AnimationPlayer")
+animation_name = "T-Pose"
+loop_in_preview = true
+display_name = "T Pose"
+group = "Poses"
+
+[sub_resource type="Resource" id="Resource_gswbg"]
+script = ExtResource("10_gswbg")
+character_scene = ExtResource("2_rrge4")
+options = Array[ExtResource("3_h8t5a")]([SubResource("Resource_h8t5a"), SubResource("Resource_poqx8"), SubResource("Resource_q7edx"), SubResource("Resource_vhfd2"), SubResource("Resource_ydfh7"), SubResource("Resource_ru1b3"), SubResource("Resource_6cb4e"), SubResource("Resource_wrxio"), SubResource("Resource_36n8s"), SubResource("Resource_erljc"), SubResource("Resource_e7bg2"), SubResource("Resource_0gx4s"), SubResource("Resource_gqtey"), SubResource("Resource_h4n76"), SubResource("Resource_aeq6p"), SubResource("Resource_moxio"), SubResource("Resource_nlnfs"), SubResource("Resource_3kpu8"), SubResource("Resource_vm17e"), SubResource("Resource_d2c2y"), SubResource("Resource_jdgv8"), SubResource("Resource_lw2ui"), SubResource("Resource_vw2tn"), SubResource("Resource_xd4m4"), SubResource("Resource_fi8is"), SubResource("Resource_x12ox"), SubResource("Resource_lec78"), SubResource("Resource_t700e")])
+
+[node name="CharacterCreator" type="Node" unique_id=1604359459 node_paths=PackedStringArray("ui", "exporter", "preview")]
+script = ExtResource("1_gyfhh")
+config = SubResource("Resource_gswbg")
+ui = NodePath("CreatorUI")
+exporter = NodePath("CharacterExporter")
+preview = NodePath("CharacterPreview")
+
+[node name="CharacterPreview" type="SubViewportContainer" parent="." unique_id=1262837080]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+script = ExtResource("11_l2eci")
+
+[node name="SubViewport" type="SubViewport" parent="CharacterPreview" unique_id=1316669584]
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(1152, 648)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="CameraRig" type="Node3D" parent="CharacterPreview/SubViewport" unique_id=980729709]
+
+[node name="CameraPivot" type="Node3D" parent="CharacterPreview/SubViewport/CameraRig" unique_id=779138876]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterPreview/SubViewport/CameraRig/CameraPivot" unique_id=198185314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+fov = 50.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="CharacterPreview/SubViewport" unique_id=881884232]
+environment = ExtResource("12_rikl1")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="CharacterPreview/SubViewport" unique_id=1019911162]
+transform = Transform3D(0.70710677, 0.4055798, -0.579228, 0, 0.81915206, 0.57357645, 0.70710677, -0.4055798, 0.579228, 0, 0, 0)
+light_color = Color(1, 0.98669523, 0.9639762, 1)
+light_energy = 1.2
+shadow_enabled = true
+shadow_blur = 2.0
+
+[node name="FillLight" type="DirectionalLight3D" parent="CharacterPreview/SubViewport" unique_id=220680306]
+transform = Transform3D(-0.70710677, -0.1830127, 0.68301266, 0, 0.9659258, 0.25881904, -0.70710677, 0.1830127, -0.68301266, 0, 0, 0)
+light_color = Color(0.9452769, 0.96857667, 1, 1)
+light_energy = 0.4
+
+[node name="Character" parent="CharacterPreview/SubViewport" unique_id=472716260 instance=ExtResource("2_rrge4")]
+
+[node name="CreatorUI" type="VBoxContainer" parent="." unique_id=1507116964]
+anchors_preset = -1
+anchor_right = 0.25
+anchor_bottom = 1.0
+script = ExtResource("13_td3e6")
+
+[node name="Tabs" type="TabContainer" parent="CreatorUI" unique_id=87607092]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Bangs" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=1253288426]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 0
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Bangs" unique_id=1068949534]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SwapGroup_swap_bangs" type="VBoxContainer" parent="CreatorUI/Tabs/Bangs/OptionList" unique_id=1745927510]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_hcn5q")
+option_id = "swap_bangs"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Bangs/OptionList/SwapGroup_swap_bangs" unique_id=1722370037]
+layout_mode = 2
+
+[node name="ButtonContainer" type="HFlowContainer" parent="CreatorUI/Tabs/Bangs/OptionList/SwapGroup_swap_bangs" unique_id=357389565]
+layout_mode = 2
+
+[node name="Choice_0" type="Button" parent="CreatorUI/Tabs/Bangs/OptionList/SwapGroup_swap_bangs/ButtonContainer" unique_id=990882023]
+layout_mode = 2
+toggle_mode = true
+text = "None"
+
+[node name="Choice_1" type="Button" parent="CreatorUI/Tabs/Bangs/OptionList/SwapGroup_swap_bangs/ButtonContainer" unique_id=1947124332]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Bangs"
+
+[node name="SliderRow_blend_bangs_bangs_length" type="HBoxContainer" parent="CreatorUI/Tabs/Bangs/OptionList" unique_id=830835319]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_bangs_bangs_length"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Bangs/OptionList/SliderRow_blend_bangs_bangs_length" unique_id=1880758595]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Bangs Length"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Bangs/OptionList/SliderRow_blend_bangs_bangs_length" unique_id=967030837]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Bangs/OptionList/SliderRow_blend_bangs_bangs_length" unique_id=1772807954]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="ColorRow_color_bangs_hair_color" type="HBoxContainer" parent="CreatorUI/Tabs/Bangs/OptionList" unique_id=2116090012]
+layout_mode = 2
+script = ExtResource("16_lc8ry")
+option_id = "color_bangs_hair_color"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Bangs/OptionList/ColorRow_color_bangs_hair_color" unique_id=405601006]
+layout_mode = 2
+text = "Hair Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="CreatorUI/Tabs/Bangs/OptionList/ColorRow_color_bangs_hair_color" unique_id=352770505]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+edit_alpha = false
+
+[node name="Beard" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=1397694953]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 1
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Beard" unique_id=205505257]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SwapGroup_swap_beard" type="VBoxContainer" parent="CreatorUI/Tabs/Beard/OptionList" unique_id=1128898057]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_hcn5q")
+option_id = "swap_beard"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Beard/OptionList/SwapGroup_swap_beard" unique_id=1787398705]
+layout_mode = 2
+
+[node name="ButtonContainer" type="HFlowContainer" parent="CreatorUI/Tabs/Beard/OptionList/SwapGroup_swap_beard" unique_id=590178057]
+layout_mode = 2
+
+[node name="Choice_0" type="Button" parent="CreatorUI/Tabs/Beard/OptionList/SwapGroup_swap_beard/ButtonContainer" unique_id=521739187]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "None"
+
+[node name="Choice_1" type="Button" parent="CreatorUI/Tabs/Beard/OptionList/SwapGroup_swap_beard/ButtonContainer" unique_id=1821886992]
+layout_mode = 2
+toggle_mode = true
+text = "Beard"
+
+[node name="ColorRow_color_beard_hair_color" type="HBoxContainer" parent="CreatorUI/Tabs/Beard/OptionList" unique_id=2084473729]
+layout_mode = 2
+script = ExtResource("16_lc8ry")
+option_id = "color_beard_hair_color"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Beard/OptionList/ColorRow_color_beard_hair_color" unique_id=467131163]
+layout_mode = 2
+text = "Hair Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="CreatorUI/Tabs/Beard/OptionList/ColorRow_color_beard_hair_color" unique_id=734534161]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+edit_alpha = false
+
+[node name="Belt" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=145813037]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 2
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Belt" unique_id=3242872]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRow_color_belt_belt_color" type="HBoxContainer" parent="CreatorUI/Tabs/Belt/OptionList" unique_id=166569089]
+layout_mode = 2
+script = ExtResource("16_lc8ry")
+option_id = "color_belt_belt_color"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Belt/OptionList/ColorRow_color_belt_belt_color" unique_id=858505888]
+layout_mode = 2
+text = "Belt Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="CreatorUI/Tabs/Belt/OptionList/ColorRow_color_belt_belt_color" unique_id=520481164]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.34217715, 0.27710128, 0.26855746, 1)
+edit_alpha = false
+
+[node name="Body" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=948460613]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 3
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Body" unique_id=1559117095]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SliderRow_blend_body_weight" type="HBoxContainer" parent="CreatorUI/Tabs/Body/OptionList" unique_id=1886210185]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_body_weight"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_weight" unique_id=410708453]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Weight"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_weight" unique_id=1344483023]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_weight" unique_id=910094426]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="SliderRow_blend_body_muscularity" type="HBoxContainer" parent="CreatorUI/Tabs/Body/OptionList" unique_id=322791549]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_body_muscularity"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_muscularity" unique_id=1323310739]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Muscularity"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_muscularity" unique_id=1016283003]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_muscularity" unique_id=10725420]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="SliderRow_blend_body_bust" type="HBoxContainer" parent="CreatorUI/Tabs/Body/OptionList" unique_id=2039074931]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_body_bust"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_bust" unique_id=104169302]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Bust"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_bust" unique_id=1095978238]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_bust" unique_id=1042158150]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="SliderRow_blend_body_waist" type="HBoxContainer" parent="CreatorUI/Tabs/Body/OptionList" unique_id=1062042869]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_body_waist"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_waist" unique_id=1197486686]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Waist"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_waist" unique_id=506621030]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Body/OptionList/SliderRow_blend_body_waist" unique_id=1363588398]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="ColorRow_color_body_skin_color" type="HBoxContainer" parent="CreatorUI/Tabs/Body/OptionList" unique_id=1024561880]
+layout_mode = 2
+script = ExtResource("16_lc8ry")
+option_id = "color_body_skin_color"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Body/OptionList/ColorRow_color_body_skin_color" unique_id=1473889631]
+layout_mode = 2
+text = "Skin Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="CreatorUI/Tabs/Body/OptionList/ColorRow_color_body_skin_color" unique_id=1955100431]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.866485, 0.71605873, 0.63022107, 1)
+edit_alpha = false
+
+[node name="Eye Left" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=2081585353]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 4
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Eye Left" unique_id=1222574211]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AtlasGroup_atlas_eye_left_left_eye" type="VBoxContainer" parent="CreatorUI/Tabs/Eye Left/OptionList" unique_id=2027264640]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_hcn5q")
+option_id = "atlas_eye_left_left_eye"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Eye Left/OptionList/AtlasGroup_atlas_eye_left_left_eye" unique_id=81246378]
+layout_mode = 2
+text = "Left Eye"
+
+[node name="ButtonContainer" type="HFlowContainer" parent="CreatorUI/Tabs/Eye Left/OptionList/AtlasGroup_atlas_eye_left_left_eye" unique_id=623218302]
+layout_mode = 2
+
+[node name="Choice_0" type="Button" parent="CreatorUI/Tabs/Eye Left/OptionList/AtlasGroup_atlas_eye_left_left_eye/ButtonContainer" unique_id=5971168]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Style 1"
+
+[node name="Choice_1" type="Button" parent="CreatorUI/Tabs/Eye Left/OptionList/AtlasGroup_atlas_eye_left_left_eye/ButtonContainer" unique_id=367499410]
+layout_mode = 2
+toggle_mode = true
+text = "Style 2"
+
+[node name="Choice_2" type="Button" parent="CreatorUI/Tabs/Eye Left/OptionList/AtlasGroup_atlas_eye_left_left_eye/ButtonContainer" unique_id=1628764959]
+layout_mode = 2
+toggle_mode = true
+text = "Style 3"
+
+[node name="Choice_3" type="Button" parent="CreatorUI/Tabs/Eye Left/OptionList/AtlasGroup_atlas_eye_left_left_eye/ButtonContainer" unique_id=1694872933]
+layout_mode = 2
+toggle_mode = true
+text = "Style 4"
+
+[node name="Eye Right" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=1918203029]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 5
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Eye Right" unique_id=1844079221]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AtlasGroup_atlas_eye_right_right_eye" type="VBoxContainer" parent="CreatorUI/Tabs/Eye Right/OptionList" unique_id=1081503296]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_hcn5q")
+option_id = "atlas_eye_right_right_eye"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Eye Right/OptionList/AtlasGroup_atlas_eye_right_right_eye" unique_id=903880589]
+layout_mode = 2
+text = "Right Eye"
+
+[node name="ButtonContainer" type="HFlowContainer" parent="CreatorUI/Tabs/Eye Right/OptionList/AtlasGroup_atlas_eye_right_right_eye" unique_id=1465373336]
+layout_mode = 2
+
+[node name="Choice_0" type="Button" parent="CreatorUI/Tabs/Eye Right/OptionList/AtlasGroup_atlas_eye_right_right_eye/ButtonContainer" unique_id=1913998549]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Style 1"
+
+[node name="Choice_1" type="Button" parent="CreatorUI/Tabs/Eye Right/OptionList/AtlasGroup_atlas_eye_right_right_eye/ButtonContainer" unique_id=1636589129]
+layout_mode = 2
+toggle_mode = true
+text = "Style 2"
+
+[node name="Choice_2" type="Button" parent="CreatorUI/Tabs/Eye Right/OptionList/AtlasGroup_atlas_eye_right_right_eye/ButtonContainer" unique_id=1888662608]
+layout_mode = 2
+toggle_mode = true
+text = "Style 3"
+
+[node name="Choice_3" type="Button" parent="CreatorUI/Tabs/Eye Right/OptionList/AtlasGroup_atlas_eye_right_right_eye/ButtonContainer" unique_id=1978309171]
+layout_mode = 2
+toggle_mode = true
+text = "Style 4"
+
+[node name="Eyebrow Left" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=655455769]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 6
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Eyebrow Left" unique_id=23379817]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AtlasGroup_atlas_eyebrow_left_left_eyebrow" type="VBoxContainer" parent="CreatorUI/Tabs/Eyebrow Left/OptionList" unique_id=91656138]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_hcn5q")
+option_id = "atlas_eyebrow_left_left_eyebrow"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Eyebrow Left/OptionList/AtlasGroup_atlas_eyebrow_left_left_eyebrow" unique_id=2099528007]
+layout_mode = 2
+text = "Left Eyebrow"
+
+[node name="ButtonContainer" type="HFlowContainer" parent="CreatorUI/Tabs/Eyebrow Left/OptionList/AtlasGroup_atlas_eyebrow_left_left_eyebrow" unique_id=1071813307]
+layout_mode = 2
+
+[node name="Choice_0" type="Button" parent="CreatorUI/Tabs/Eyebrow Left/OptionList/AtlasGroup_atlas_eyebrow_left_left_eyebrow/ButtonContainer" unique_id=1096689160]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Style 1"
+
+[node name="Choice_1" type="Button" parent="CreatorUI/Tabs/Eyebrow Left/OptionList/AtlasGroup_atlas_eyebrow_left_left_eyebrow/ButtonContainer" unique_id=288228177]
+layout_mode = 2
+toggle_mode = true
+text = "Style 2"
+
+[node name="Choice_2" type="Button" parent="CreatorUI/Tabs/Eyebrow Left/OptionList/AtlasGroup_atlas_eyebrow_left_left_eyebrow/ButtonContainer" unique_id=1582478929]
+layout_mode = 2
+toggle_mode = true
+text = "Style 3"
+
+[node name="Choice_3" type="Button" parent="CreatorUI/Tabs/Eyebrow Left/OptionList/AtlasGroup_atlas_eyebrow_left_left_eyebrow/ButtonContainer" unique_id=1714276750]
+layout_mode = 2
+toggle_mode = true
+text = "Style 4"
+
+[node name="Eyebrow Right" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=1037950203]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 7
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Eyebrow Right" unique_id=571701199]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AtlasGroup_atlas_eyebrow_right_right_eyebrow" type="VBoxContainer" parent="CreatorUI/Tabs/Eyebrow Right/OptionList" unique_id=1630786532]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_hcn5q")
+option_id = "atlas_eyebrow_right_right_eyebrow"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Eyebrow Right/OptionList/AtlasGroup_atlas_eyebrow_right_right_eyebrow" unique_id=809708388]
+layout_mode = 2
+text = "Right Eyebrow"
+
+[node name="ButtonContainer" type="HFlowContainer" parent="CreatorUI/Tabs/Eyebrow Right/OptionList/AtlasGroup_atlas_eyebrow_right_right_eyebrow" unique_id=707093665]
+layout_mode = 2
+
+[node name="Choice_0" type="Button" parent="CreatorUI/Tabs/Eyebrow Right/OptionList/AtlasGroup_atlas_eyebrow_right_right_eyebrow/ButtonContainer" unique_id=1638423937]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Style 1"
+
+[node name="Choice_1" type="Button" parent="CreatorUI/Tabs/Eyebrow Right/OptionList/AtlasGroup_atlas_eyebrow_right_right_eyebrow/ButtonContainer" unique_id=1559019077]
+layout_mode = 2
+toggle_mode = true
+text = "Style 2"
+
+[node name="Choice_2" type="Button" parent="CreatorUI/Tabs/Eyebrow Right/OptionList/AtlasGroup_atlas_eyebrow_right_right_eyebrow/ButtonContainer" unique_id=164734949]
+layout_mode = 2
+toggle_mode = true
+text = "Style 3"
+
+[node name="Choice_3" type="Button" parent="CreatorUI/Tabs/Eyebrow Right/OptionList/AtlasGroup_atlas_eyebrow_right_right_eyebrow/ButtonContainer" unique_id=967448545]
+layout_mode = 2
+toggle_mode = true
+text = "Style 4"
+
+[node name="Hair" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=1051448480]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 8
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Hair" unique_id=730564796]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SwapGroup_swap_hair" type="VBoxContainer" parent="CreatorUI/Tabs/Hair/OptionList" unique_id=594144444]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_hcn5q")
+option_id = "swap_hair"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Hair/OptionList/SwapGroup_swap_hair" unique_id=166745643]
+layout_mode = 2
+
+[node name="ButtonContainer" type="HFlowContainer" parent="CreatorUI/Tabs/Hair/OptionList/SwapGroup_swap_hair" unique_id=1179129909]
+layout_mode = 2
+
+[node name="Choice_0" type="Button" parent="CreatorUI/Tabs/Hair/OptionList/SwapGroup_swap_hair/ButtonContainer" unique_id=1457001883]
+layout_mode = 2
+toggle_mode = true
+text = "None"
+
+[node name="Choice_1" type="Button" parent="CreatorUI/Tabs/Hair/OptionList/SwapGroup_swap_hair/ButtonContainer" unique_id=1005313579]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Default"
+
+[node name="SliderRow_blend_hair_length" type="HBoxContainer" parent="CreatorUI/Tabs/Hair/OptionList" unique_id=68957746]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_hair_length"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Hair/OptionList/SliderRow_blend_hair_length" unique_id=1551222175]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Length"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Hair/OptionList/SliderRow_blend_hair_length" unique_id=991867103]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Hair/OptionList/SliderRow_blend_hair_length" unique_id=212265770]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="ColorRow_color_hair_hair_color" type="HBoxContainer" parent="CreatorUI/Tabs/Hair/OptionList" unique_id=1113449206]
+layout_mode = 2
+script = ExtResource("16_lc8ry")
+option_id = "color_hair_hair_color"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Hair/OptionList/ColorRow_color_hair_hair_color" unique_id=388852933]
+layout_mode = 2
+text = "Hair Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="CreatorUI/Tabs/Hair/OptionList/ColorRow_color_hair_hair_color" unique_id=700541852]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.44424593, 0.3433335, 0.31438842, 1)
+edit_alpha = false
+
+[node name="Head" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=332817815]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 9
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Head" unique_id=1495747313]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SliderRow_blend_head_nose" type="HBoxContainer" parent="CreatorUI/Tabs/Head/OptionList" unique_id=639432348]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_head_nose"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_nose" unique_id=1043335064]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Nose"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_nose" unique_id=2089048640]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_nose" unique_id=1061656108]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="SliderRow_blend_head_cheeks" type="HBoxContainer" parent="CreatorUI/Tabs/Head/OptionList" unique_id=511289139]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_head_cheeks"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_cheeks" unique_id=1770344842]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Cheeks"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_cheeks" unique_id=1709578118]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_cheeks" unique_id=268999346]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="SliderRow_blend_head_chin" type="HBoxContainer" parent="CreatorUI/Tabs/Head/OptionList" unique_id=1540189846]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("15_y2ckf")
+option_id = "blend_head_chin"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_chin" unique_id=2092789005]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Chin"
+clip_text = true
+
+[node name="Slider" type="HSlider" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_chin" unique_id=1630238026]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+
+[node name="Readout" type="Label" parent="CreatorUI/Tabs/Head/OptionList/SliderRow_blend_head_chin" unique_id=982251133]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+text = "0.00"
+horizontal_alignment = 2
+
+[node name="Mouth" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=771699401]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 10
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Mouth" unique_id=1041910903]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AtlasGroup_atlas_mouth_mouth" type="VBoxContainer" parent="CreatorUI/Tabs/Mouth/OptionList" unique_id=192572050]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("14_hcn5q")
+option_id = "atlas_mouth_mouth"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Mouth/OptionList/AtlasGroup_atlas_mouth_mouth" unique_id=618977740]
+layout_mode = 2
+text = "Mouth"
+
+[node name="ButtonContainer" type="HFlowContainer" parent="CreatorUI/Tabs/Mouth/OptionList/AtlasGroup_atlas_mouth_mouth" unique_id=1943607244]
+layout_mode = 2
+
+[node name="Choice_0" type="Button" parent="CreatorUI/Tabs/Mouth/OptionList/AtlasGroup_atlas_mouth_mouth/ButtonContainer" unique_id=637475311]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+text = "Style 1"
+
+[node name="Choice_1" type="Button" parent="CreatorUI/Tabs/Mouth/OptionList/AtlasGroup_atlas_mouth_mouth/ButtonContainer" unique_id=1866913897]
+layout_mode = 2
+toggle_mode = true
+text = "Style 2"
+
+[node name="Choice_2" type="Button" parent="CreatorUI/Tabs/Mouth/OptionList/AtlasGroup_atlas_mouth_mouth/ButtonContainer" unique_id=1179892891]
+layout_mode = 2
+toggle_mode = true
+text = "Style 3"
+
+[node name="Choice_3" type="Button" parent="CreatorUI/Tabs/Mouth/OptionList/AtlasGroup_atlas_mouth_mouth/ButtonContainer" unique_id=529987409]
+layout_mode = 2
+toggle_mode = true
+text = "Style 4"
+
+[node name="Pants" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=1411138509]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 11
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Pants" unique_id=811589690]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRow_color_pants_pants_color" type="HBoxContainer" parent="CreatorUI/Tabs/Pants/OptionList" unique_id=1712635668]
+layout_mode = 2
+script = ExtResource("16_lc8ry")
+option_id = "color_pants_pants_color"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Pants/OptionList/ColorRow_color_pants_pants_color" unique_id=1500729594]
+layout_mode = 2
+text = "Pants Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="CreatorUI/Tabs/Pants/OptionList/ColorRow_color_pants_pants_color" unique_id=1927717914]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.31503034, 0.46069565, 0.5253031, 1)
+edit_alpha = false
+
+[node name="Shirt" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=145451062]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 12
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Shirt" unique_id=400610932]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRow_color_shirt_shirt_color" type="HBoxContainer" parent="CreatorUI/Tabs/Shirt/OptionList" unique_id=1640202471]
+layout_mode = 2
+script = ExtResource("16_lc8ry")
+option_id = "color_shirt_shirt_color"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Shirt/OptionList/ColorRow_color_shirt_shirt_color" unique_id=819290226]
+layout_mode = 2
+text = "Shirt Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="CreatorUI/Tabs/Shirt/OptionList/ColorRow_color_shirt_shirt_color" unique_id=1327053276]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.27135912, 0.30379024, 0.20197356, 1)
+edit_alpha = false
+
+[node name="Shoes" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=1617137830]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 13
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Shoes" unique_id=1190201633]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRow_color_shoes_shoes_color" type="HBoxContainer" parent="CreatorUI/Tabs/Shoes/OptionList" unique_id=53443378]
+layout_mode = 2
+script = ExtResource("16_lc8ry")
+option_id = "color_shoes_shoes_color"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Shoes/OptionList/ColorRow_color_shoes_shoes_color" unique_id=1541515397]
+layout_mode = 2
+text = "Shoes Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="CreatorUI/Tabs/Shoes/OptionList/ColorRow_color_shoes_shoes_color" unique_id=1035983612]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.41590208, 0.34729263, 0.34270334, 1)
+edit_alpha = false
+
+[node name="Poses" type="ScrollContainer" parent="CreatorUI/Tabs" unique_id=2006068146]
+visible = false
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+metadata/_tab_index = 14
+
+[node name="OptionList" type="VBoxContainer" parent="CreatorUI/Tabs/Poses" unique_id=1107910824]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AnimRow_anim_a_pose" type="HBoxContainer" parent="CreatorUI/Tabs/Poses/OptionList" unique_id=953496883]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("17_kbvq5")
+option_id = "anim_a_pose"
+animation_name = "A-Pose"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Poses/OptionList/AnimRow_anim_a_pose" unique_id=987546994]
+layout_mode = 2
+text = "A Pose"
+
+[node name="PreviewButton" type="Button" parent="CreatorUI/Tabs/Poses/OptionList/AnimRow_anim_a_pose" unique_id=497400703]
+layout_mode = 2
+text = "Preview"
+
+[node name="AnimRow_anim_idle" type="HBoxContainer" parent="CreatorUI/Tabs/Poses/OptionList" unique_id=1464653289]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("17_kbvq5")
+option_id = "anim_idle"
+animation_name = "Idle"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Poses/OptionList/AnimRow_anim_idle" unique_id=105655983]
+layout_mode = 2
+text = "Idle"
+
+[node name="PreviewButton" type="Button" parent="CreatorUI/Tabs/Poses/OptionList/AnimRow_anim_idle" unique_id=290075050]
+layout_mode = 2
+text = "Preview"
+
+[node name="AnimRow_anim_t_pose" type="HBoxContainer" parent="CreatorUI/Tabs/Poses/OptionList" unique_id=1126623134]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("17_kbvq5")
+option_id = "anim_t_pose"
+animation_name = "T-Pose"
+
+[node name="OptionLabel" type="Label" parent="CreatorUI/Tabs/Poses/OptionList/AnimRow_anim_t_pose" unique_id=1792605771]
+layout_mode = 2
+text = "T Pose"
+
+[node name="PreviewButton" type="Button" parent="CreatorUI/Tabs/Poses/OptionList/AnimRow_anim_t_pose" unique_id=772926530]
+layout_mode = 2
+text = "Preview"
+
+[node name="Footer" type="HBoxContainer" parent="CreatorUI" unique_id=473887251]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="RandomizeButton" type="Button" parent="CreatorUI/Footer" unique_id=1051411732]
+layout_mode = 2
+text = "↺ Randomize"
+
+[node name="CancelButton" type="Button" parent="CreatorUI/Footer" unique_id=2002420859]
+layout_mode = 2
+text = "Cancel"
+
+[node name="ConfirmButton" type="Button" parent="CreatorUI/Footer" unique_id=1346305385]
+layout_mode = 2
+text = "Confirm"
+
+[node name="CharacterExporter" type="Node" parent="." unique_id=782134060]
+script = ExtResource("18_wywsg")

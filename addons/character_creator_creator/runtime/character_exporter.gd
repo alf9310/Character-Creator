@@ -19,6 +19,7 @@ var _blend_idx_cache:	Dictionary[String, int] = {}		# "MeshPath":"blend_shape_me
 var _player_cache:		Dictionary[NodePath, AnimationPlayer] = {}
 var _mat_cache:			Dictionary[String, Material] = {}   # "NodePath":surface_idx -> Material
 
+
 # Called once by CharacterCreator._ready() before any player input arrives
 # Does 3 things:
 # - Builds the option map
@@ -40,23 +41,31 @@ func initialize(config: CharacterConfig, preview: CharacterPreview, ui: Control)
 
 
 func _warm_cache(opt: OptionDefinition) -> void:
-	# TODO: Clean this
-	if opt is BlendshapeOption or opt is ColorOption or opt is MeshSwapOption:
-		var path: NodePath = opt.mesh_path if opt.get("mesh_path") else NodePath("")
-		if path != NodePath("") and not _mesh_cache.has(path):
-			var node := _character_root.get_node_or_null(path)
-			if node is MeshInstance3D:
-				_mesh_cache[path] = node
+	if opt is BlendshapeOption or opt is ColorOption or opt is MeshSwapOption or opt is TextureAtlasOption:
+		var paths_to_check: Array[NodePath] = []
+		if opt.get("mesh_paths"): paths_to_check.append_array(opt.get("mesh_paths"))
+		elif opt.get("mesh_path"): paths_to_check.append(opt.get("mesh_path"))
 
-	if opt is ColorOption:
-		var mesh := _mesh_cache.get(opt.mesh_path) as MeshInstance3D
-		if mesh:
-			var key := "%s:%d" % [opt.mesh_path, opt.surface_index]
-			if not _mat_cache.has(key):
-				# May be a shared resource used by multiple mesh nodes.
-				# Whether writes to it propagate to other nodes is controlled 
-				# per-option by ColorOption.apply_to_shared_material.
-				_mat_cache[key] = mesh.get_active_material(opt.surface_index)
+		for path in paths_to_check:
+			if path != NodePath("") and not _mesh_cache.has(path):
+				var node := _character_root.get_node_or_null(path)
+				if node is MeshInstance3D:
+					_mesh_cache[path] = node
+					
+	if opt is BlendshapeOption:
+		for path in opt.mesh_paths:
+			if path != NodePath("") and not _mesh_cache.has(path):
+				var node := _character_root.get_node_or_null(path)
+				if node is MeshInstance3D:
+					_mesh_cache[path] = node
+
+	if opt is ColorOption or opt is TextureAtlasOption:
+		for path in opt.mesh_paths:
+			var mesh := _mesh_cache.get(path) as MeshInstance3D
+			if mesh:
+				var key := "%s:%d" % [path, opt.surface_index]
+				if not _mat_cache.has(key):
+					_mat_cache[key] = mesh.get_active_material(opt.surface_index)
 
 	if opt is MeshSwapOption:
 		for choice: MeshSwapChoice in opt.choices:
@@ -79,7 +88,7 @@ func _warm_cache(opt: OptionDefinition) -> void:
 func apply_option(option_id: String, value: Variant) -> void:
 	print("Exporter received signal for: ", option_id, " -> ", value)
 	
-	var opt := _option_map.get(option_id) as OptionDefinition
+	var opt := _option_map.get(option_id)
 	if opt == null:
 		push_error("Exporter failed: Option ID '%s' not found in option_map!" % option_id)
 		return
@@ -91,7 +100,11 @@ func apply_option(option_id: String, value: Variant) -> void:
 	elif opt is ColorOption:
 		_apply_color(opt, value as Color)
 	elif opt is AnimationOption:
+		_current_state.animation_choices.clear()
+		_current_state.record(option_id, opt.animation_name)
 		_apply_animation(opt)
+	elif opt is TextureAtlasOption:    
+		_apply_texture_atlas(opt, value as int)
 	
 	# State stays in sync with what the player intended rather than what the mesh actually reflects.
 	# If a node was missing (ex. a swap mesh the artist forgot to include), 
@@ -138,53 +151,55 @@ func _apply_swap(opt: MeshSwapOption, choice_index: int, force_full_pass: bool =
 # means that on the hot path (slider dragged) the only work done is 
 # a dictionary lookup and set_blend_shape_value()
 func _apply_blendshape(opt: BlendshapeOption, value: float) -> void:
-	var mesh := _mesh_cache.get(opt.mesh_path) as MeshInstance3D
-	if mesh == null:
-		return
+	# Loop through every mesh attached to this option
+	for path in opt.mesh_paths:
+		var mesh := _mesh_cache.get(path) as MeshInstance3D
+		if mesh == null:
+			return
 
-	# Index lookup is cached separately to avoid find_blend_shape_by_name() on every slider frame.
-	# Names are stable within a session.
-	var cache_key := "%s::%s" % [opt.mesh_path, opt.blend_shape_name]
-	var idx: int = _blend_idx_cache.get(cache_key, -2)
+		# Index lookup is cached separately to avoid find_blend_shape_by_name() on every slider frame.
+		# Names are stable within a session.
+		var cache_key := "%s::%s" % [path, opt.blend_shape_name]
+		var idx: int = _blend_idx_cache.get(cache_key, -2)
 
-	if idx == -2:   # -2 = not yet looked up; -1 = confirmed missing
-		idx = mesh.find_blend_shape_by_name(opt.blend_shape_name)
-		_blend_idx_cache[cache_key] = idx
+		if idx == -2:   # -2 = not yet looked up; -1 = confirmed missing
+			idx = mesh.find_blend_shape_by_name(opt.blend_shape_name)
+			_blend_idx_cache[cache_key] = idx
 
-	if idx < 0:
-		return
+		if idx >= 0:
+			mesh.set_blend_shape_value(idx, value)
 
-	mesh.set_blend_shape_value(idx, value)
 
 # ColorOption: 
 func _apply_color(opt: ColorOption, color: Color) -> void:
-	var key := "%s:%d" % [opt.mesh_path, opt.surface_index]
-	var mat := _mat_cache.get(key) as Material
+	for path in opt.mesh_paths:
+		var key := "%s:%d" % [path, opt.surface_index]
+		var mat := _mat_cache.get(key) as Material
 
-	if mat == null:
-		return
+		if mat == null:
+			continue
 
-	if opt.surface_index == -1:
-		# Apply to every surface on this mesh
-		var mesh := _mesh_cache.get(opt.mesh_path) as MeshInstance3D
-		if mesh == null:
-			return
-		for i in range(mesh.get_surface_override_material_count()):
-			_write_color(mesh.get_active_material(i), opt.shader_param, color)
-		return
-	
-	# Duplicates on first write and then updates _mat_cache[key] to point at the duplicate.
-	if not opt.apply_to_shared_material:
-		# Duplicate the material so other meshes using the same resource
-		# are not affected. Store the duplicate back into the cache so
-		# subsequent frames write to the duplicate, not the original.
-		mat = mat.duplicate()
-		var mesh := _mesh_cache.get(opt.mesh_path) as MeshInstance3D
-		if mesh:
-			mesh.set_surface_override_material(opt.surface_index, mat)
-		_mat_cache[key] = mat
+		if opt.surface_index == -1:
+			# Apply to every surface on this mesh
+			var mesh := _mesh_cache.get(path) as MeshInstance3D
+			if mesh == null:
+				continue
+			for i in range(mesh.get_surface_override_material_count()):
+				_write_color(mesh.get_active_material(i), opt.shader_param, color)
+			continue
+		
+		# Duplicates on first write and then updates _mat_cache[key] to point at the duplicate.
+		if not opt.apply_to_shared_material:
+			# Duplicate the material so other meshes using the same resource
+			# are not affected. Store the duplicate back into the cache so
+			# subsequent frames write to the duplicate, not the original.
+			mat = mat.duplicate()
+			var mesh := _mesh_cache.get(path) as MeshInstance3D
+			if mesh:
+				mesh.set_surface_override_material(opt.surface_index, mat)
+			_mat_cache[key] = mat
 
-	_write_color(mat, opt.shader_param, color)
+		_write_color(mat, opt.shader_param, color)
 
 func _write_color(mat: Material, param: String, color: Color) -> void:
 	if mat is ShaderMaterial:
@@ -215,6 +230,29 @@ func _apply_animation(opt: AnimationOption) -> void:
 		player.seek(anim.length, true)   # true = update immediately
 		player.pause()
 
+func _apply_texture_atlas(opt: TextureAtlasOption, choice_index: int) -> void:
+	var uv_width := 1.0 / float(opt.columns)
+	var uv_height := 1.0 / float(opt.rows)
+	var col := choice_index % opt.columns
+	var row := choice_index / opt.columns
+	var offset := Vector3(col * uv_width, row * uv_height, 0.0)
+
+	for path in opt.mesh_paths:
+		var key := "%s:%d" % [path, opt.surface_index]
+		var mat := _mat_cache.get(key) as Material
+		if mat == null: continue
+
+		if not opt.apply_to_shared_material:
+			mat = mat.duplicate()
+			var mesh := _mesh_cache.get(path) as MeshInstance3D
+			if mesh:
+				mesh.set_surface_override_material(opt.surface_index, mat)
+			_mat_cache[key] = mat
+
+		if mat is StandardMaterial3D:
+			mat.uv1_offset = offset
+		elif mat is ShaderMaterial:
+			mat.set_shader_parameter(opt.shader_param, Vector2(offset.x, offset.y))
 
 ## Bulk Application
 ## When a CharacterState is loaded from disk and needs to be applied all at once. 
@@ -225,12 +263,15 @@ func _apply_full_state(state: CharacterState) -> void:
 		var opt := _option_map.get(option_id) as BlendshapeOption
 		if opt:
 			_apply_blendshape(opt, state.blendshape_values[option_id])
-
+	
+	# Handles both MeshSwaps and Atlases
 	for option_id in state.swap_choices:
-		var opt := _option_map.get(option_id) as MeshSwapOption
-		if opt:
+		var opt := _option_map.get(option_id)
+		if opt is MeshSwapOption:
 			# Pass 'true' to force the loop and clean up dirty scene state
 			_apply_swap(opt, state.swap_choices[option_id], true)
+		elif opt is TextureAtlasOption:
+			_apply_texture_atlas(opt, state.swap_choices[option_id])
 
 	for option_id in state.color_values:
 		var opt := _option_map.get(option_id) as ColorOption

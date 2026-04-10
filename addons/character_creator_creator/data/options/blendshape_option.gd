@@ -3,9 +3,11 @@
 class_name BlendshapeOption
 extends OptionDefinition
 
-## NodePath to the MeshInstance3D that owns this blendshape.
-## Relative to the CharacterPreview's SubViewport root.
-@export var mesh_path: NodePath
+## Array of NodePaths to the MeshInstance3D nodes that share this blendshape.
+@export var mesh_paths: Array[NodePath] = []
+
+## Tracks all the mesh groups this shape appears in, used by the editor dock.
+@export var editor_groups: Array[String] = []
 
 ## The exact string returned by get_blend_shape_name() for this shape.
 @export var blend_shape_name: String
@@ -17,6 +19,6 @@ extends OptionDefinition
 
 func _to_string() -> String:
 	return "BlendshapeOption(%s | %s::%s | default: %.2f [%.2f–%.2f])" % [
-		display_name, mesh_path, blend_shape_name,
+		display_name, mesh_paths.size(), blend_shape_name,
 		default_value, min_value, max_value
 	]

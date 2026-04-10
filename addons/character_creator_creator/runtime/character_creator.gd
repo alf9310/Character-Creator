@@ -97,6 +97,12 @@ func _on_character_cancelled() -> void:
 
 func _on_randomize() -> void:
 	var state := CharacterState.randomized(config)
+	
+	# Perserve current pose
+	var current_state = exporter.get_current_state()
+	state.animation_choices.clear()
+	state.animation_choices = current_state.animation_choices.duplicate()
+
 	exporter.load_state(state)
 	
 ## When the creator scene opens and save_state_on_confirm is true, 

@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Character Creator Creator"
+run/main_scene="uid://n6jtlstkvr6s"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [editor_plugins]
@@ -26,3 +27,4 @@ enabled=PackedStringArray("res://addons/character_creator_creator/plugin.cfg")
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
